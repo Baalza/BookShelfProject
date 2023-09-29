@@ -65,6 +65,11 @@ public class User {
     private List<Authorities> authorities = new ArrayList<>();
 
     @JsonManagedReference
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval=true,fetch = FetchType.LAZY)
+    //@JoinColumn(name = "user_id")
+    private List<FileInfo> fileInfoList = new ArrayList<>();
+
+    @JsonManagedReference
     @OneToOne(mappedBy = "userToken", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private PersistentLogin persistentLogin;
 
@@ -76,6 +81,11 @@ public class User {
     public void addAuthorities(Authorities authority){
         authorities.add(authority);
         authority.setUser(this);
+    }
+
+    public void addFile(FileInfo fileInfo){
+        fileInfoList.add(fileInfo);
+        fileInfo.setUser(this);
     }
 
     public User(Long id, String username, String password, Boolean isUsing2FA, String secret, String matchingPassword, String nickname, Boolean enabled, List<Authorities> authorities, PersistentLogin persistentLogin) {

@@ -9,6 +9,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.LocaleResolver;
 import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
@@ -26,6 +27,26 @@ public class DemoConfig implements WebMvcConfigurer {
     ApplicationContext applicationContex;
 
     @Override
+    public void addResourceHandlers(ResourceHandlerRegistry registry){
+        registry.addResourceHandler("/files/view/plain/**").addResourceLocations("/WEB-INF/files/");
+        //registry.addResourceHandler("/files/view/txt**").addResourceLocations("/WEB-INF/files/");
+        registry.addResourceHandler("/files/view/pdf/**").addResourceLocations("/WEB-INF/files/");
+        registry.addResourceHandler("/files/view/text/html/**").addResourceLocations("/WEB-INF/files/");
+        registry.addResourceHandler("/files/view/json/**").addResourceLocations("/WEB-INF/files/");
+        registry.addResourceHandler("/files/view/xml/**").addResourceLocations("/WEB-INF/files/");
+        registry.addResourceHandler("/files/view/jpeg/**").addResourceLocations("/WEB-INF/files/");
+        registry.addResourceHandler("/files/view/png/**").addResourceLocations("/WEB-INF/files/");
+        registry.addResourceHandler("/files/view/gif/**").addResourceLocations("/WEB-INF/files/");
+        registry.addResourceHandler("/files/view/docx/**").addResourceLocations("/WEB-INF/files/");
+        registry.addResourceHandler("/files/view/vnd.openxmlformats-officedocument.spreadsheetml.sheet/**").addResourceLocations("/WEB-INF/files/");
+        registry.addResourceHandler("/files/view/octet-stream/**").addResourceLocations("/WEB-INF/files/");
+        registry.addResourceHandler("/files/view/mpeg/**").addResourceLocations("/WEB-INF/files/");
+        registry.addResourceHandler("/files/view/mp4/**").addResourceLocations("/WEB-INF/files/");
+        registry.addResourceHandler("/files/view/text/javascript/**").addResourceLocations("/WEB-INF/files/");
+        registry.addResourceHandler("/files/view/css/**").addResourceLocations("/WEB-INF/files/");
+    }
+
+    @Override
     public void addViewControllers (final ViewControllerRegistry registry){
         registry.addViewController("/login");
     }
@@ -35,7 +56,6 @@ public class DemoConfig implements WebMvcConfigurer {
         registry.addInterceptor(localeChangeInterceptor());
 
     }
-
 
     @Bean
     public LocaleResolver localeResolver(){
