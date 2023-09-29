@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="it">
+<head>
+  <meta charset="UTF-8">
+  <link
+          href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"
+          rel="stylesheet"
+          integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD"
+          crossorigin="anonymous"
+  />
+  <link href="style.css" rel="stylesheet" />
+  <title>Sign up</title>
+</head>
+<body>
+
+<div class="container-fluid">
+  <div class="position-absolute top-0 end-0 pt-3">
+    <a class="pe-2" href="?lang=it">italiano</a>
+    <a class="pe-4" href="?lang=us">inglese</a>
+  </div>
+  <div class="container">
+    <div class="col-auto text-center align-items-center pt-2">
+      <h1 class="pt-5" th:text="#{name.reg}"></h1>
+    </div>
+  </div>
+</div>
+<div class="container-fluid">
+  <div class="container">
+    <div class="row justify-content-center text-center pt-5">
+      <form class="row g-3 justify-content-center" th:object="${addUser}" th:action="@{registration}" method="post">
+        <div class="col-auto">
+          <input type="text" class="form-control" id="username"  th:placeholder="#{name.mail}" th:field="*{username}">
+          <p th:if="${#fields.hasErrors('username')}" th:errorclass="error" th:errors="*{username}" />
+        </div>
+        <div class="col-auto">
+          <input type="text" class="form-control" id="nickname"  th:placeholder="#{name.nick}" th:field="*{nickname}">
+          <p th:if="${#fields.hasErrors('nickname')}" th:errorclass="error" th:errors="*{nickname}" />
+        </div>
+
+        <div class="row justify-content-center text-center pt-2">
+        <div class="col-auto">
+          <input type="password" class="form-control" id="password"  th:placeholder="#{name.pass}" th:field="*{password}">
+          <p th:if="${#fields.hasErrors('password')}" th:errorclass="error" th:errors="*{password}" />
+        </div>
+          <div class="col-auto">
+            <input type="password" class="form-control" id="password2"  th:placeholder="#{name.RepeatPassword}" th:field="*{matchingPassword}">
+            <p th:if="${#fields.hasErrors('password')}" th:errorclass="error" th:errors="*{matchingPassword}"/>
+          </div>
+        </div>
+        <div class="row justify-content-center text-center pt-2">
+          <div class="col-auto">
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" name="using2FA" value="true" id="flexCheckDefault">
+              <label class="form-check-label" for="flexCheckDefault">
+                Default checkbox
+              </label>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-auto">
+          <p class="error" th:text="${duplicateMail}"></p>
+          <p class="error" th:text="${invalidEmail}"></p>
+          <button type="submit" class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#exampleModal" th:text="#{add.user}"></button>
+          <!-- Modal -->
+          <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLabel">Conferma Account</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                  <div class="alert alert-warning" role="alert">
+                    Ti è stato inviato un link via mail per confermare l'account
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+      <a href="http://localhost:8080/demo/"> <button type="button" class="btn btn-primary mt-3" th:text="#{name.back}"></button></a>
+    </div>
+  </div>
+</div>
+
+<script
+        src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
+        crossorigin="anonymous"
+></script>
+</body>
+</html>
