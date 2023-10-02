@@ -126,9 +126,9 @@ public class FileController {
         fileInfo.setDate(dateModified);
         fileInfo.setExstension(exstension);
         fileInfo.setUser(user);
-
+        fileService.save(file);
         try {
-            fileService.save(file);
+
             fileInfoService.save(fileInfo);
         }catch(Exception e){
 
@@ -155,7 +155,7 @@ public class FileController {
         return "redirect:/loadFile";
     }
     //sovrascrivi il file
-   /* @GetMapping("overwrite/{ow}")
+    @GetMapping("overwrite/{ow}")
     public String owFile(@PathVariable(value = "ow") boolean ow) throws IOException {
         System.out.println("overwrite");
         if(!ow){
@@ -195,7 +195,7 @@ public class FileController {
 
 
 
-    }*/
+    }
     //delete di un file
     @GetMapping("deleteFile/{fileName}")
     public String deleteFile(@PathVariable(value = "fileName") String fileName){
