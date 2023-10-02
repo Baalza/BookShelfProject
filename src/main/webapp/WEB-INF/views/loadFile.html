@@ -2,6 +2,9 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <noscript>
+        <meta http-equiv=refresh content='0; url=http://localhost:8080/demo/error?js=disabled'>
+    </noscript>
     <link
             href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"
             rel="stylesheet"
@@ -94,9 +97,12 @@
 
                 </tbody>
             </table>
+            <p th:if="${(param.error != null) and (param.error[0] == 'invalidFilename')}" class="error mt-2">Nome del file non valido,rinominare il file o selezionarne un altro.</p>
+
             <button type="button" class="btn btn-primary mt-3" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
                 Upload File
             </button>
+
         </div>
     </div>
 </div>
@@ -118,8 +124,17 @@
                             <input class="form-control" type="file" id="formFile" name="file">
                         </div>
                     </div>
+                    <div class="row justify-content-center">
                     <div class="col-auto">
-                        <button type="submit" class="btn btn-primary mb-3">Upload File</button>
+                        <button id="submitFile" type="submit" class="btn btn-primary mb-1" disabled>Upload File</button>
+                        <a
+                           href="#"
+                           data-bs-toggle="tooltip"
+                           data-bs-title="Seleziona un file per fare l'upload"
+                        ><i class="fa-solid fa-question fa-lg ms-3"></i></a>
+
+                    </div>
+
                     </div>
                 </form>
             </div>
@@ -150,7 +165,28 @@
         </div>
     </div>
 </div>
-
+<!-- Modal -->
+<div class="modal fade" id="staticBackdrop3" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+     aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header justify-content-center text-center">
+                <h5 class="modal-title" id="staticBackdropLabel3">Overwrite File</h5>
+            </div>
+            <div class="modal-body">
+                <h3 class="modal-body-txt">Il file esiste già, sei sicuro di volerlo sovrascrivere?</h3>
+            </div>
+            <div class="modal-footer">
+                <a href="overwrite/true">
+                    <button type="button" class="btn btn-danger">SI</button>
+                </a>
+                <a href="overwrite/false">
+                <button type="button" class="btn btn-primary" data-bs-dismiss="modal">NO</button>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
 
 <script
         src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"

@@ -33,6 +33,13 @@ public class FileInfo {
 
     }
 
+    public FileInfo(String filename, String dateModified) {
+        this.date = dateModified;
+        this.name = filename;
+    }
+
+
+
     public String getName() {
         return this.name;
     }

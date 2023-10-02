@@ -27,6 +27,30 @@ public class FileServiceImpl implements FileService {
         } catch (Exception e) {
             if (e instanceof FileAlreadyExistsException) {
                 throw new RuntimeException("A file of that name already exists.");
+
+            }
+
+            throw new RuntimeException(e.getMessage());
+        }
+    }
+
+    @Override
+    public void save(MultipartFile file, Path path) {
+        MultipartFile file2;
+
+        try {
+            Files.createDirectories(path);
+        } catch (IOException e) {
+            throw new RuntimeException("Could not initialize folder for upload!");
+        }
+        try {
+
+            Files.copy(file.getInputStream(), path.resolve(file.getOriginalFilename()));
+            System.out.println(file.getOriginalFilename()+"lalalalal");
+        } catch (Exception e) {
+            if (e instanceof FileAlreadyExistsException) {
+                throw new RuntimeException("A file of that name already exists.");
+
             }
 
             throw new RuntimeException(e.getMessage());
@@ -39,6 +63,11 @@ public class FileServiceImpl implements FileService {
     }
 
     @Override
+    public void deleteAll(Path path) {
+        FileSystemUtils.deleteRecursively(path.toFile());
+    }
+
+    @Override
     public boolean delete(String fileName) {
         try{
             Path file = root.resolve(fileName);
@@ -47,10 +76,19 @@ public class FileServiceImpl implements FileService {
             throw new RuntimeException("Error. "+e.getMessage());
         }
     }
+
     @Override
     public Stream<Path> loadAll(){
         try {
             return Files.walk(this.root, 1).filter(path -> !path.equals(this.root)).map(this.root::relativize);
+        } catch (IOException e) {
+            throw new RuntimeException("Could not load the files!");
+        }
+    }
+    @Override
+    public Stream<Path> loadAll(Path pathT){
+        try {
+            return Files.walk(pathT, 1).filter(path -> !path.equals(pathT)).map(pathT::relativize);
         } catch (IOException e) {
             throw new RuntimeException("Could not load the files!");
         }

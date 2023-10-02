@@ -1,25 +1,19 @@
 package com.bookshelf2.demo;
 
-import ch.qos.logback.core.net.LoginAuthenticator;
 import com.bookshelf2.demo.service.BookshelfUserDetailsContextMapper;
 import com.bookshelf2.demo.service.UserService;
 import com.bookshelf2.demo.util.TwoFactorAuthenticationFilter;
-import com.bookshelf2.demo.util.TwoFactorAuthenticationProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
-import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
 import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
 import org.springframework.security.web.authentication.ui.DefaultLoginPageGeneratingFilter;
@@ -54,6 +48,8 @@ public class DemoSecurityConfig  extends WebSecurityConfigurerAdapter {
 
 
         http
+
+
                 .authorizeRequests()
                 .antMatchers("/anonymus*").anonymous() //role anonymus
                 .antMatchers("/login*").permitAll()

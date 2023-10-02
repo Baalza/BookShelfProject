@@ -29,6 +29,7 @@ public class DemoConfig implements WebMvcConfigurer {
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry){
         registry.addResourceHandler("/files/view/plain/**").addResourceLocations("/WEB-INF/files/");
+        registry.addResourceHandler("/files/pdf/**").addResourceLocations("/WEB-INF/pdf/");
         //registry.addResourceHandler("/files/view/txt**").addResourceLocations("/WEB-INF/files/");
         registry.addResourceHandler("/files/view/pdf/**").addResourceLocations("/WEB-INF/files/");
         registry.addResourceHandler("/files/view/text/html/**").addResourceLocations("/WEB-INF/files/");

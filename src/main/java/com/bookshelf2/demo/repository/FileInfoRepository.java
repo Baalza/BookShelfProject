@@ -8,4 +8,6 @@ import org.springframework.stereotype.Repository;
 public interface FileInfoRepository extends JpaRepository<FileInfo, Long> {
 
     public void deleteByName(String name);
+
+    public FileInfo findByName(String filename);
 }

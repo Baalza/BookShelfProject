@@ -10,4 +10,6 @@ public interface FileInfoService {
     @Modifying
     @Transactional
     public void delete(String name);
+
+    public FileInfo findFile(String filename);
 }

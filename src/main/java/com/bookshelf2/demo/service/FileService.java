@@ -1,5 +1,6 @@
 package com.bookshelf2.demo.service;
 
+import com.bookshelf2.demo.model.FileInfo;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -15,12 +16,19 @@ public interface FileService {
 
     public void save(MultipartFile file);
 
+    public void save(MultipartFile file, Path path);
+
     public void deleteAll();
+
+    public void deleteAll(Path path);
 
     public boolean delete(String fileName);
 
+
+
     public Stream<Path> loadAll();
 
+    public Stream<Path> loadAll(Path path);
     public boolean checkFolder();
 
     public boolean checkFile() throws IOException;

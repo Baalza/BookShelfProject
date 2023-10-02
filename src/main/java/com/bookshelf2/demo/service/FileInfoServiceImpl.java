@@ -19,4 +19,9 @@ public class FileInfoServiceImpl implements  FileInfoService {
     public void delete(String name) {
         fileInfoRepository.deleteByName(name);
     }
+
+    @Override
+    public FileInfo findFile(String filename) {
+        return fileInfoRepository.findByName(filename);
+    }
 }

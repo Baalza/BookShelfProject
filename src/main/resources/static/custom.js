@@ -20,5 +20,28 @@ $(document).on('click', '#trash', function() {
 
     deleteLink.setAttribute("href", nuovoUrl);
 
+});
 
+const fileInput = document.getElementById('formFile');
+const submitButton = document.getElementById('submitFile');
+
+fileInput.addEventListener('change', function () {
+    if (fileInput.files.length > 0) {
+        // Abilita il pulsante quando un file è stato selezionato
+        submitButton.removeAttribute('disabled');
+    } else {
+        // Disabilita il pulsante se nessun file è stato selezionato
+        submitButton.setAttribute('disabled', 'disabled');
+    }
+});
+
+$(document).ready(function() {
+    // Leggi il valore del parametro dalla URL
+    var urlParams = new URLSearchParams(window.location.search);
+    var varParam = urlParams.get('file');
+
+    // Controlla se il parametro è "true" e apri la modal
+    if (varParam === 'exist') {
+        $('#staticBackdrop3').modal('show');
+    }
 });
