@@ -18,6 +18,10 @@ a {
 .nav-link:hover{
     color: #0d6efd;
 }
+#data-table {
+    height: 400px;
+    width: 100%;
+}
 
 .dropdown-menu[data-bs-popper] {
 
@@ -27,3 +31,14 @@ a {
 .full-vh {
     height: calc(var(--vh, 1vh) * 70);
 }
+.ag-header-cell-label, .ag-header-group-cell-label{
+    justify-content: center;
+}
+/*
+.ag-theme-alpine {
+     disable all borders
+    --ag-borders: right;
+     then add back a border between rows
+    --ag-row-border-width: 5px;
+    --ag-row-border-color: black;
+}*/

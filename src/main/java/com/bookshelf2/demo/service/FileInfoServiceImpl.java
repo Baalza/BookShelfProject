@@ -5,6 +5,8 @@ import com.bookshelf2.demo.repository.FileInfoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class FileInfoServiceImpl implements  FileInfoService {
 
@@ -23,5 +25,10 @@ public class FileInfoServiceImpl implements  FileInfoService {
     @Override
     public FileInfo findFile(String filename) {
         return fileInfoRepository.findByName(filename);
+    }
+
+    @Override
+    public List<FileInfo> findAllFile() {
+        return fileInfoRepository.findAll();
     }
 }
