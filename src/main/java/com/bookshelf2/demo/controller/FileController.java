@@ -7,7 +7,10 @@ import com.bookshelf2.demo.service.FileInfoService;
 import com.bookshelf2.demo.service.FileService;
 import com.bookshelf2.demo.service.UserService;
 import com.bookshelf2.demo.util.RcloneCommandExecutor;
+import org.apache.tika.detect.Detector;
+import org.apache.tika.metadata.Metadata;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -59,12 +62,15 @@ public class FileController {
         List<FileInfo> fileList;
         fileList = fileInfoService.findAllFile();
 
+
+
         model.addAttribute("files", fileList);
         return "loadFile";
 
     }
 
     //Upload di un file
+    @CacheEvict
     @PostMapping("/loadFile")
     public String addFile(@RequestParam("file") MultipartFile file, Map<String, Object> model) throws IOException {
 
@@ -73,11 +79,6 @@ public class FileController {
 
             return "redirect:/loadFile?error=invalidFilename";
         }
-        //byte[] fileContent = file.getBytes();
-        //String nuovoNome = file.getOriginalFilename().trim().replaceAll(" ","_");
-        //Path filePath = Paths.get("/Users/baalza/Desktop/demoBookShelf/src/main/webapp/WEB-INF/files", nuovoNome);
-        // Salva il nuovo file con il nuovo nome
-        //Files.write(filePath, fileContent);
         SecurityContext context = SecurityContextHolder.getContext();
         Authentication authentication = context.getAuthentication();
         String username = authentication.getName();
@@ -100,9 +101,9 @@ public class FileController {
         fileInfo.setDate(dateModified);
         fileInfo.setExstension(exstension);
         fileInfo.setUser(user);
-        fileService.save(file);
-        try {
 
+        try {
+            fileService.save(file);
             fileInfoService.save(fileInfo);
         } catch (Exception e) {
 
@@ -115,7 +116,7 @@ public class FileController {
         //String path = root.resolve(nuovoNome).toString();
         //System.out.println("nuovo nome "+path);
 
-        try {
+        /*try {
             String command = "rclone copy " + path + " BookShelfRemote:FileBookShelf";
             String result = commandExecutor.getCommandOutput(command);
             System.out.println("COMMAND " + result);
@@ -123,10 +124,10 @@ public class FileController {
 
         } catch (IOException | InterruptedException e) {
             e.printStackTrace();
-        }
+        }*/
 
 
-        return "redirect:/loadFile";
+        return "redirect:/loadFile?add=true";
     }
 
     //sovrascrivi il file
@@ -153,18 +154,16 @@ public class FileController {
 
             try {
                 // Sposta il file nella directory di destinazione
-                Files.move(sourceFilePath, root.resolve(filename), StandardCopyOption.REPLACE_EXISTING);
+                Files.copy(sourceFilePath, root.resolve(filename), StandardCopyOption.REPLACE_EXISTING);
                 fileService.deleteAll(path);
-                String command = "rclone copy " + "/Users/baalza/Desktop/demoBookShelf/src/main/webapp/WEB-INF/files/" + filename + " BookShelfRemote:FileBookShelf";
+                /*String command = "rclone copy " + "/Users/baalza/Desktop/demoBookShelf/src/main/webapp/WEB-INF/files/" + filename + " BookShelfRemote:FileBookShelf";
                 String result = commandExecutor.getCommandOutput(command);
-                System.out.println("COMMAND " + result);
+                System.out.println("COMMAND " + result);*/
                 System.out.println("File spostato con successo.");
             } catch (IOException e) {
                 System.err.println("Errore durante lo spostamento del file: " + e.getMessage());
-            } catch (InterruptedException e) {
-                throw new RuntimeException(e);
             }
-            return "redirect:/loadFile";
+            return "redirect:/loadFile?ow=true";
         }
 
 
@@ -172,9 +171,12 @@ public class FileController {
 
     //delete di un file
     @GetMapping("deleteFile/{fileName}")
-    public String deleteFile(@PathVariable(value = "fileName") String fileName) {
-        fileInfoService.delete(fileName);
-        try {
+    public String deleteFile(@PathVariable(value = "fileName",required = false) String fileName) {
+        //if(fileName != null) {
+        System.out.println(fileName);
+            fileInfoService.delete(fileName);
+            fileService.delete(fileName);
+        /*try {
             String command = "rclone delete BookShelfRemote:FileBookShelf/" + fileName;
             String result = commandExecutor.getCommandOutput(command);
             System.out.println("COMMAND " + result);
@@ -182,9 +184,13 @@ public class FileController {
 
         } catch (IOException | InterruptedException e) {
             e.printStackTrace();
-        }
+        }*/
+            return "redirect:/loadFile?delete=true";
+        //}else{
+           // return "redirect:/loadFile?delete=true";
+        //}
 
-        return "redirect:/loadFile";
+
     }
 
 
@@ -202,7 +208,76 @@ public class FileController {
 
         return "index";
     }
+
+    @GetMapping("bisync")
+    public String doBisync(@RequestParam(name = "ow",required = false) boolean ow,@RequestParam(name = "add",required = false) boolean add,@RequestParam(name = "delete",required = false) boolean delete){
+        System.out.println("parametro "+ow+add+delete);
+        if(!ow && !add && !delete){
+            List<FileInfo> list = fileInfoService.findAllFile();
+            if(!list.isEmpty()) {
+                try {
+                    String command = "rclone bisync " + root + " BookShelfRemote:FileBookShelf --delete-before --force --verbose";
+                    String result = commandExecutor.getCommandOutput(command);
+                    System.out.println("COMMAND " + result);
+
+                } catch (IOException | InterruptedException e) {
+                    e.printStackTrace();
+                }
+                try {
+                    String command = "rclone bisync " + root + " BookShelfRemote:FileBookShelf --resync --verbose";
+                    String result = commandExecutor.getCommandOutput(command);
+                    System.out.println("COMMAND " + result);
+
+                } catch (IOException | InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }else{
+                try {
+                    String command = "rclone delete BookShelfRemote:FileBookShelf --verbose";
+                    String result = commandExecutor.getCommandOutput(command);
+                    System.out.println("COMMAND " + result);
+
+                } catch (IOException | InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        }else if(ow || add){
+            try {
+                String command = "rclone bisync /Users/baalza/Desktop/demoBookShelf/src/main/webapp/WEB-INF/files BookShelfRemote:FileBookShelf --resync --verbose";
+                String result = commandExecutor.getCommandOutput(command);
+                System.out.println("COMMAND " + result);
+
+            } catch (IOException | InterruptedException e) {
+                e.printStackTrace();
+            }
+        }else if(delete){
+            List<FileInfo> list = fileInfoService.findAllFile();
+            if(!list.isEmpty()) {
+                try {
+                    String command = "rclone bisync " + root + " BookShelfRemote:FileBookShelf --delete-before --force --verbose";
+                    String result = commandExecutor.getCommandOutput(command);
+                    System.out.println("COMMAND " + result);
+
+                } catch (IOException | InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }else{
+                try {
+                    String command = "rclone delete BookShelfRemote:FileBookShelf --verbose";
+                    String result = commandExecutor.getCommandOutput(command);
+                    System.out.println("COMMAND " + result);
+
+                } catch (IOException | InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
+        return"redirect:/loadFile";
+    }
 }
+
+
 
 
 

@@ -45,3 +45,20 @@ $(document).ready(function() {
         $('#staticBackdrop3').modal('show');
     }
 });
+
+$(document).ready(function(){
+    var urlParams = new URLSearchParams(window.location.search);
+    let type;
+    let val;
+// Itera attraverso tutti i parametri presenti nella query string
+    urlParams.forEach(function (value, key) {
+        type = key;
+        val=value;
+        console.log("Nome del parametro: " + key);
+        console.log("Valore del parametro: " + value);
+    });
+    let typeB = document.getElementById('bisync');
+    if(type != null) {
+        typeB.href += '?' + type + '=' + val;
+    }
+});

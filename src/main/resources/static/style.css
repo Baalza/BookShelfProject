@@ -18,11 +18,14 @@ a {
 .nav-link:hover{
     color: #0d6efd;
 }
-#data-table {
+#data-table-fs {
     height: 400px;
     width: 100%;
 }
-
+#data-table-gd {
+    height: 400px;
+    width: 100%;
+}
 .dropdown-menu[data-bs-popper] {
 
     right: 1px !important;
