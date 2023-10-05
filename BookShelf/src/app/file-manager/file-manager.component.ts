@@ -1,5 +1,8 @@
-import { Component } from '@angular/core';
+import {Component} from '@angular/core';
 import { faUser } from '@fortawesome/free-solid-svg-icons';
+import { faArrowsRotate } from '@fortawesome/free-solid-svg-icons';
+
+
 
 @Component({
   selector: 'bookshelf-file-manager',
@@ -8,4 +11,7 @@ import { faUser } from '@fortawesome/free-solid-svg-icons';
 })
 export class FileManagerComponent {
 faUser = faUser;
+faArrowsRotate = faArrowsRotate;
+
+
 }

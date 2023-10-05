@@ -4,6 +4,7 @@ import com.bookshelf2.demo.model.FileInfo;
 import com.bookshelf2.demo.service.FileInfoService;
 import com.bookshelf2.demo.util.RcloneCommandExecutor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 import com.google.gson.Gson;
@@ -15,6 +16,7 @@ import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @RestController
@@ -27,12 +29,15 @@ public class restFileController {
     private RcloneCommandExecutor commandExecutor;
 
     @GetMapping("restFiles")
+    @CrossOrigin(origins = "http://localhost:4200")
     public List<FileInfo> restFiles() {
         List<FileInfo> files = fileInfoService.findAllFile();
+        Collections.reverse(files);
         return files;
     }
 
     @GetMapping("restFiles-drive")
+    @CrossOrigin(origins = "http://localhost:4200")
     public List<FileInfo> restFilesDrive() throws IOException, InterruptedException {
         List <FileInfo> fileList = new ArrayList<>();
         String command = "rclone lsjson BookShelfRemote:FileBookShelf";

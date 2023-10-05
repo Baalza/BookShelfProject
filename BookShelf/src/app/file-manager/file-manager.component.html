@@ -22,7 +22,7 @@
     </div>
     <div class="row justify-content-center text-center pt-2">
       <div class="col-2">
-        <a id="bisync" href="bisync"  th:classappend="${param.add != null or param.ow != null or param.delete!=null} ? 'btn btn-danger' : ''"><button id="sync" class="btn" type="button"><i class="fa-solid fa-arrows-rotate"></i></button></a>
+        <a id="bisync" href="bisync"><button id="sync" class="btn btn-primary" type="button"> <fa-icon [icon]="faArrowsRotate"></fa-icon></button></a>
       </div>
     </div>
   </div>
@@ -31,12 +31,14 @@
 
   <div class="row text-center pt-5">
     <div class="col-sm-12 col-md-12 col-lg-6">
-      <h4 class="pt-2">FileSystem List</h4>
-      <div id="data-table-fs" class="ag-theme-alpine"></div>
+      <h1 class="pt-2">FileSystem List</h1>
+      <!-- AG Grid Angular Component -->
+      <bookshelf-data-grid-fs></bookshelf-data-grid-fs>
     </div>
     <div class="col-sm-12 col-md-12 col-lg-6">
-      <h4 class="pt-2">GoogleDrive List</h4>
-      <div id="data-table-gd" class="ag-theme-alpine"></div>
+      <h1 class="pt-2">GoogleDrive List</h1>
+      <!-- AG Grid Angular Component -->
+      <bookshelf-data-grid-gd></bookshelf-data-grid-gd>
     </div>
   </div>
   <div class="row mt-3 justify-content-center text-center">

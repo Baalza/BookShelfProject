@@ -24,5 +24,11 @@ a {
   right: 1px !important;
   left:auto !important;
 }
+:host ::ng-deep .ag-header-cell-label, .ag-header-group-cell-label{
+  justify-content: center;
+}
+:host ::ng-deep .ag-center-cols-container{
+  width: auto !important;
+}
 
 
