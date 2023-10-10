@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {FormControl, FormGroup} from "@angular/forms";
+import {ActivatedRoute, Params, Route, Router} from '@angular/router'
 
 @Component({
   selector: 'bookshelf-login',
@@ -11,10 +12,16 @@ export class LoginComponent implements  OnInit{
   userForm!: FormGroup;
   username! : String;
   password! : String;
-  constructor(private http: HttpClient) {
+  isInvalid: Boolean = false;
+  constructor(private http: HttpClient,private router:Router, private route: ActivatedRoute) {
   }
   ngOnInit(): void {
     this.initForm();
+    this.route.queryParams.subscribe(params => {
+      if (params['invalid'] === 'true') {
+        this.isInvalid = params['invalid'] === 'true';
+      }
+    });
   }
   initForm(): void {
     this.userForm = new FormGroup({
@@ -35,10 +42,15 @@ export class LoginComponent implements  OnInit{
       .pipe(
       ).subscribe((response: any) => {
       console.log("risposta: "+JSON.stringify(response));
-    },
-      (error: any) => {
-        console.error('Errore durante la richiesta:', error);
-      });
+      if(response.error === false) {
+        window.location.replace("/home");
+
+      }else if(response.error === "true"){
+
+        this.router.navigateByUrl('/', {skipLocationChange: true}).then(() =>
+          this.router.navigate(['/login'], {queryParams: {invalid: true}}));
+      }
+    });
   }
 
 

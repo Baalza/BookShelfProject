@@ -95,7 +95,7 @@ public class DemoSecurityConfig  extends WebSecurityConfigurerAdapter {
                     String role = authentication.getAuthorities().iterator().next().getAuthority();
 
                     Map<String, Object> responseData = new HashMap<>();
-                    responseData.put("message", "Autenticazione riuscita");
+                    responseData.put("error", false);
                     responseData.put("user", userDetails.getUsername());
                     responseData.put("role",role);
                     response.getWriter().write(new ObjectMapper().writeValueAsString(responseData));
@@ -104,7 +104,7 @@ public class DemoSecurityConfig  extends WebSecurityConfigurerAdapter {
                     // Gestisci l'errore di autenticazione
                     //response.setStatus(HttpStatus.UNAUTHORIZED.value());
                     response.setContentType("application/json");
-                    response.getWriter().write("{ \"error\": \"Autenticazione fallita\" }");
+                    response.getWriter().write("{ \"error\": \"true\" }");
                 })
                 //.failureUrl("/login?error=true")
                 .permitAll()

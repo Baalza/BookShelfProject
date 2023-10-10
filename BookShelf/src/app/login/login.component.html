@@ -26,8 +26,9 @@
           <div class="col-auto">
             <button type="submit" class="btn btn-primary mb-3" >Registrati</button>
           </div>
-
-          <p class="error" th:if="${param.error}">Invalid username or password</p>
+          <div *ngIf="isInvalid">
+          <p class="error" >Invalid username or password</p>
+          </div>
         </div>
 
         <div class="row justify-content-center">
