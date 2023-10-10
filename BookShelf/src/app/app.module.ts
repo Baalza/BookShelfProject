@@ -12,6 +12,13 @@ import { HttpClientModule } from '@angular/common/http'
 import { AgGridModule } from 'ag-grid-angular';
 import { DataGridFsComponent } from './data-grid-fs/data-grid-fs.component';
 import { DataGridGdComponent } from './data-grid-gd/data-grid-gd.component';
+import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
+import {ReactiveFormsModule} from "@angular/forms";
+import { ModalOwComponent } from './modal-ow/modal-ow.component';
+import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
+import { TrashButtonComponent } from './trash-button/trash-button.component';
+import { DeleteModalComponent } from './delete-modal/delete-modal.component';
+import { LoginComponent } from './login/login.component';
 
 
 
@@ -23,16 +30,23 @@ import { DataGridGdComponent } from './data-grid-gd/data-grid-gd.component';
     NavbarComponent,
     DataGridFsComponent,
     DataGridGdComponent,
+    ModalOwComponent,
+    TrashButtonComponent,
+    DeleteModalComponent,
+    LoginComponent,
   ],
-  imports: [
-    BrowserModule,
-    BrowserAnimationsModule,
-    ToolbarComponent,
-    FontAwesomeModule,
-    AppRoutingModule,
-    HttpClientModule,
-    AgGridModule
-  ],
+    imports: [
+        BrowserModule,
+        BrowserAnimationsModule,
+        ToolbarComponent,
+        FontAwesomeModule,
+        AppRoutingModule,
+        HttpClientModule,
+        AgGridModule,
+        NgbModule,
+        ReactiveFormsModule,
+        MatProgressSpinnerModule
+    ],
   providers: [],
   bootstrap: [AppComponent]
 })

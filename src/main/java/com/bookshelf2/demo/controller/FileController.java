@@ -7,6 +7,8 @@ import com.bookshelf2.demo.service.FileInfoService;
 import com.bookshelf2.demo.service.FileService;
 import com.bookshelf2.demo.service.UserService;
 import com.bookshelf2.demo.util.RcloneCommandExecutor;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.tika.detect.Detector;
 import org.apache.tika.metadata.Metadata;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,7 +40,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-@Controller
+@RestController
 public class FileController {
 
     @Autowired
@@ -70,14 +72,17 @@ public class FileController {
     }
 
     //Upload di un file
-    @CacheEvict
+
     @PostMapping("/loadFile")
-    public String addFile(@RequestParam("file") MultipartFile file, Map<String, Object> model) throws IOException {
+    @CrossOrigin(origins = "http://localhost:4200",methods = RequestMethod.POST)
+    public String addFile(@RequestParam(value = "file",required = false) MultipartFile file, Map<String, Object> model) throws IOException {
 
 
         if (file.getOriginalFilename().contains(" ")) {
-
-            return "redirect:/loadFile?error=invalidFilename";
+            String string = "file-manager-invalid";
+            ObjectMapper objectMapper = new ObjectMapper();
+            String json = objectMapper.writeValueAsString(string);
+            return json;
         }
         SecurityContext context = SecurityContextHolder.getContext();
         Authentication authentication = context.getAuthentication();
@@ -108,10 +113,13 @@ public class FileController {
         } catch (Exception e) {
 
             fileService.save(file, path);
-            return "redirect:/loadFile?file=exist";
+            String string = "file-manager-ow";
+            ObjectMapper objectMapper = new ObjectMapper();
+            String json = objectMapper.writeValueAsString(string);
+            return json;
         }
         //System.out.println(root.resolve(file.getOriginalFilename()));
-        String path = root.resolve(file.getOriginalFilename()).toString();
+        //String path = root.resolve(file.getOriginalFilename()).toString();
 
         //String path = root.resolve(nuovoNome).toString();
         //System.out.println("nuovo nome "+path);
@@ -126,8 +134,14 @@ public class FileController {
             e.printStackTrace();
         }*/
 
+        String string = "file-manager";
 
-        return "redirect:/loadFile?add=true";
+        ObjectMapper objectMapper = new ObjectMapper();
+
+        String json = objectMapper.writeValueAsString(string);
+
+        System.out.println(json);
+        return json;
     }
 
     //sovrascrivi il file
@@ -136,7 +150,14 @@ public class FileController {
         System.out.println("overwrite");
         if (!ow) {
             fileService.deleteAll(path);
-            return "redirect:/loadFile";
+            String string = "file-manager";
+
+            ObjectMapper objectMapper = new ObjectMapper();
+
+            String json = objectMapper.writeValueAsString(string);
+
+            System.out.println(json);
+            return json;
         } else {
 
             File tempFile = new File("/Users/baalza/Desktop/demoBookShelf/src/main/webapp/WEB-INF/temp");
@@ -163,7 +184,14 @@ public class FileController {
             } catch (IOException e) {
                 System.err.println("Errore durante lo spostamento del file: " + e.getMessage());
             }
-            return "redirect:/loadFile?ow=true";
+            String string = "file-manager-ow-true";
+
+            ObjectMapper objectMapper = new ObjectMapper();
+
+            String json = objectMapper.writeValueAsString(string);
+
+            System.out.println(json);
+            return json;
         }
 
 
@@ -171,7 +199,7 @@ public class FileController {
 
     //delete di un file
     @GetMapping("deleteFile/{fileName}")
-    public String deleteFile(@PathVariable(value = "fileName",required = false) String fileName) {
+    public String deleteFile(@PathVariable(value = "fileName",required = false) String fileName) throws JsonProcessingException {
         //if(fileName != null) {
         System.out.println(fileName);
             fileInfoService.delete(fileName);
@@ -185,7 +213,14 @@ public class FileController {
         } catch (IOException | InterruptedException e) {
             e.printStackTrace();
         }*/
-            return "redirect:/loadFile?delete=true";
+        String string = "file-manager";
+
+        ObjectMapper objectMapper = new ObjectMapper();
+
+        String json = objectMapper.writeValueAsString(string);
+
+        System.out.println(json);
+        return json;
         //}else{
            // return "redirect:/loadFile?delete=true";
         //}
@@ -210,7 +245,7 @@ public class FileController {
     }
 
     @GetMapping("bisync")
-    public String doBisync(@RequestParam(name = "ow",required = false) boolean ow,@RequestParam(name = "add",required = false) boolean add,@RequestParam(name = "delete",required = false) boolean delete){
+    public String doBisync(@RequestParam(name = "ow",required = false) boolean ow,@RequestParam(name = "add",required = false) boolean add,@RequestParam(name = "delete",required = false) boolean delete) throws JsonProcessingException {
         System.out.println("parametro "+ow+add+delete);
         if(!ow && !add && !delete){
             List<FileInfo> list = fileInfoService.findAllFile();
@@ -273,7 +308,14 @@ public class FileController {
             }
         }
 
-        return"redirect:/loadFile";
+        String string = "file-manager";
+
+        ObjectMapper objectMapper = new ObjectMapper();
+
+        String json = objectMapper.writeValueAsString(string);
+
+        System.out.println(json);
+        return json;
     }
 }
 
