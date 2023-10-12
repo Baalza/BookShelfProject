@@ -11,36 +11,29 @@
     <div class="row justify-content-center text-center pt-2">
       <div class="col-auto">
         <a routerLink="">
-        <img
-          class="d-inline-block align-text-top pt-1 img-fluid"
-          src="assets/image/emt-logo-small2.png"
-          alt=""
-          width="140"
-          height="140"
-        />
+          <img
+            class="d-inline-block align-text-top pt-1 img-fluid"
+            src="assets/image/emt-logo-small2.png"
+            alt=""
+            width="140"
+            height="140"
+          />
         </a>
       </div>
     </div>
     <div class="row justify-content-center text-center">
-      <form [formGroup]="userForm" (submit)="onSubmit()" class="row g-3 justify-content-center">
+      <form class="row g-3 justify-content-center">
         <div class="row justify-content-center">
           <div class="col-auto">
-            <input type="text" class="form-control mainLoginInput" id="username" name="username" formControlName="username" placeholder="&#61447;  Email" >
-          </div>
-          <div class="row justify-content-center text-center pt-3">
-            <div class="col-auto">
-              <input type="password" class="form-control mainLoginInput" id="password" name="password" formControlName="password" placeholder="&#61475;  Password" >
-            </div>
+            <input type="text" class="form-control mainLoginInput" id="username" name="username" placeholder="&#61572;  Authenticator Code" >
           </div>
           <div class="row justify-content-center pt-2">
             <div class="col-auto">
-
-              <a class="uti" routerLink="/demo/registration">Forgot Password?</a>
             </div>
           </div>
           <div class="row justify-content-center text-center pt-1">
             <div class="col-auto">
-              <div *ngIf="isInvalid">
+              <div>
                 <p class="error" >Invalid username or password</p>
               </div>
               <button type="submit" class="btn btn-primary mb-3" >Login</button>

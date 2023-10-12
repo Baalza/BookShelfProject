@@ -19,6 +19,7 @@ import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 import { TrashButtonComponent } from './trash-button/trash-button.component';
 import { DeleteModalComponent } from './delete-modal/delete-modal.component';
 import { LoginComponent } from './login/login.component';
+import { GAuthComponent } from './g-auth/g-auth.component';
 
 
 
@@ -35,6 +36,7 @@ import { LoginComponent } from './login/login.component';
     TrashButtonComponent,
     DeleteModalComponent,
     LoginComponent,
+    GAuthComponent,
   ],
     imports: [
         BrowserModule,
