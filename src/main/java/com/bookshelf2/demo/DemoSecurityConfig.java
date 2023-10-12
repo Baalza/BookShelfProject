@@ -136,9 +136,23 @@ public class DemoSecurityConfig  extends WebSecurityConfigurerAdapter {
                 .and()
                 .logout()
                 .logoutSuccessUrl("/")
+                .logoutSuccessHandler((request, response, authentication) -> {
+                    Cookie customCookie = new Cookie("Authenticated", "true");
+                    customCookie.setMaxAge(86400); // Durata in secondi
+                    customCookie.setPath("/demo"); // Imposta il percorso del cookie
+                    customCookie.setHttpOnly(false);
+                    customCookie.setDomain("localhost");
+                    response.setContentType("application/json");
+                    Map<String, Object> responseData = new HashMap<>();
+                    responseData.put("error", false);
+                    responseData.put("cookie",customCookie);
+                    response.getWriter().write(new ObjectMapper().writeValueAsString(responseData));
+                })
                 .logoutRequestMatcher(new AntPathRequestMatcher("/perform_logout", "GET"))
+
                 .invalidateHttpSession(true)
                 .deleteCookies("JSESSIONID")
+
                 .permitAll()
 
                 .and()

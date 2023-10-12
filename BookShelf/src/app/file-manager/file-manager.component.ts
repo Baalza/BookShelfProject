@@ -67,27 +67,28 @@ export class FileManagerComponent implements OnInit {
       const body = new FormData();
       console.log("submit" + this.file)
       body.append("file", this.file);
+      const options = { headers:{}, withCredentials : true };
       // Invia la chiamata POST
-      this.http.post('http://localhost:8080/demo/loadFile', body, {
-        headers: {}
-      })
+      this.http.post('http://localhost:8080/demo/loadFile', body, options
+
+      )
         .pipe(
         ).subscribe((response: any) => {
         if (response === ("file-manager")) {
           this.close(['#staticBackdrop'])
           this.close(this.component);
           this.router.navigateByUrl('/', {skipLocationChange: true}).then(() =>
-            this.router.navigate(['/file-manager'], {queryParams: {add: true}}));
+            this.router.navigate(['/demo/file-manager'], {queryParams: {add: true}}));
         } else if (response === ("file-manager-invalid")) {
           this.close(['#staticBackdrop']);
           this.close(this.component);
           this.router.navigateByUrl('/', {skipLocationChange: true}).then(() =>
-            this.router.navigate(['/file-manager'], {queryParams: {invalid: true}}));
+            this.router.navigate(['/demo/file-manager'], {queryParams: {invalid: true}}));
         } else if (response === ("file-manager-ow")) {
           this.close(['#staticBackdrop']);
           this.close(this.component);
           this.router.navigateByUrl('/', {skipLocationChange: true}).then(() =>
-            this.router.navigate(['/file-manager'], {queryParams: {exist: true}}));
+            this.router.navigate(['/demo/file-manager'], {queryParams: {exist: true}}));
         }
       });
     }
@@ -107,7 +108,7 @@ export class FileManagerComponent implements OnInit {
       if (response === ("file-manager")) {
         this.isLoading=false;
         this.router.navigateByUrl('/', {skipLocationChange: true}).then(() =>
-          this.router.navigate(['/file-manager']));
+          this.router.navigate(['/demo/file-manager']));
       }
     });
   }

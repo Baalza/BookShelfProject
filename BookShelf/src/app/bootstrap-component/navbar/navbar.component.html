@@ -1,7 +1,15 @@
 <header>
   <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container-fluid">
-      <a class="navbar-brand" href="#">Navbar</a>
+      <a class="navbar-brand" href="#">
+        <img
+          class="d-inline-block align-text-top pt-1 img-fluid"
+          src="assets/image/emt-logo-small2.png"
+          alt=""
+          width="80"
+          height="60"
+        />
+      </a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
@@ -20,8 +28,8 @@
             </a>
 
             <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink1">
-              <li><a th:if="${role == '[ROLE_ANONYMOUS]'}" class="dropdown-item" href="login" routerLink="/demo/login">Login</a></li>
-              <li><a th:if="${role == '[ROLE_USER]'}" class="dropdown-item" href="perform_logout" routerLink="/demo/logout">Logout</a></li>
+              <li><a th:if="${role == '[ROLE_ANONYMOUS]'}" class="dropdown-item"  routerLink="/demo/login">Login</a></li>
+              <li><a th:if="${role == '[ROLE_USER]'}" class="dropdown-item"  (click)="performLogout()">Logout</a></li>
               <li><a th:if="${role == '[ROLE_USER]'}" class="dropdown-item" href="qrcode"><button type="button" class="btn btn-primary">Enable 2FA</button></a></li>
             </ul>
           </li>

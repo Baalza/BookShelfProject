@@ -21,7 +21,7 @@ export class ModalOwComponent {
         ).subscribe((response: any) => {
         if (response === ("file-manager")) {
           this.router.navigateByUrl('/', {skipLocationChange: true}).then(() =>
-            this.router.navigate(['/file-manager']));
+            this.router.navigate(['/demo/file-manager']));
             //window.location.reload();
         }
       });
@@ -35,7 +35,7 @@ export class ModalOwComponent {
       ).subscribe((response: any) => {
       if (response === ("file-manager-ow-true")) {
         this.router.navigateByUrl('/', {skipLocationChange: true}).then(() =>
-            this.router.navigate(['/file-manager'], {queryParams: {ow: true}}));
+            this.router.navigate(['/demo/file-manager'], {queryParams: {ow: true}}));
       }
     });
   }

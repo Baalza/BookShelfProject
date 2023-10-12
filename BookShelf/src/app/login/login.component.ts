@@ -43,10 +43,11 @@ export class LoginComponent implements  OnInit{
       ).subscribe((response: any) => {
       console.log("risposta: "+JSON.stringify(response));
       if(response.error === false) {
+        console.log(response);
         const cookieApp = response.cookie;
         var cookie =cookieApp.name+"="+cookieApp.value
         ", maxAge="+cookieApp.maxAge
-        ", path=/demo"
+        ", Path=/"
         ", domain=localhost" ;
         document.cookie = cookie;
 
@@ -60,7 +61,7 @@ export class LoginComponent implements  OnInit{
       }else if(response.error === "true"){
 
         this.router.navigateByUrl('/', {skipLocationChange: true}).then(() =>
-          this.router.navigate(['/login'], {queryParams: {invalid: true}}));
+          this.router.navigate(['/demo/login'], {queryParams: {invalid: true}}));
       }
     });
   }

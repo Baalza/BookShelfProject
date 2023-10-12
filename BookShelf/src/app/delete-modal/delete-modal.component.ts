@@ -39,7 +39,7 @@ export class DeleteModalComponent implements OnInit {
       if (response === ("file-manager")) {
         this.close();
         this.router.navigateByUrl('/', {skipLocationChange: true}).then(() =>
-          this.router.navigate(['/file-manager'], {queryParams: {delete: true}}));
+          this.router.navigate(['/demo/file-manager'], {queryParams: {delete: true}}));
       }
     });
   }

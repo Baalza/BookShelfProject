@@ -5,49 +5,53 @@
 </head>
 <body>
 
-<div class="container-fluid">
+
+<div class="container-fluid vertical-center">
   <div class="container">
-    <div class="col-auto text-center align-items-center pt-2">
-      <h1 class="pt-5">LOGIN</h1>
+    <div class="row justify-content-center text-center pt-2">
+      <div class="col-auto">
+        <a routerLink="">
+        <img
+          class="d-inline-block align-text-top pt-1 img-fluid"
+          src="assets/image/emt-logo-small2.png"
+          alt=""
+          width="140"
+          height="140"
+        />
+        </a>
+      </div>
     </div>
-  </div>
-</div>
-<div class="container-fluid">
-  <div class="container">
-    <div class="row justify-content-center text-center pt-5">
+    <div class="row justify-content-center text-center">
       <form [formGroup]="userForm" (submit)="onSubmit()" class="row g-3 justify-content-center">
         <div class="row justify-content-center">
           <div class="col-auto">
-            <input type="text" class="form-control" id="username" name="username" formControlName="username" placeholder="Email" >
+            <input type="text" class="form-control mainLoginInput" id="username" name="username" formControlName="username" placeholder="&#61447;  Email" >
           </div>
-          <div class="col-auto">
-            <input type="password" class="form-control" id="password" name="password" formControlName="password" placeholder="Password" >
+          <div class="row justify-content-center text-center pt-3">
+            <div class="col-auto">
+              <input type="password" class="form-control mainLoginInput" id="password" name="password" formControlName="password" placeholder="&#61475;  Password" >
+            </div>
           </div>
-          <div class="col-auto">
-            <button type="submit" class="btn btn-primary mb-3" >Login</button>
-          </div>
-          <div *ngIf="isInvalid">
-          <p class="error" >Invalid username or password</p>
-          </div>
-        </div>
+          <div class="row justify-content-center pt-2">
+            <div class="col-auto">
 
-        <div class="row justify-content-center">
-          <div class="col-auto">
-
-            <div class="form-check">
-              <input class="form-check-input" type="checkbox" name="remember-me" id="flexCheckDefault">
-              <label class="form-check-label" for="flexCheckDefault">Remember me</label>
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" name="remember-me" id="flexCheckDefault">
+                <label class="form-check-label" for="flexCheckDefault">Remember me</label>
+              </div>
+              <a class="uti" routerLink="/demo/registration">Forgot Password?</a>
+            </div>
+          </div>
+          <div class="row justify-content-center text-center pt-1">
+            <div class="col-auto">
+              <div *ngIf="isInvalid">
+                <p class="error" >Invalid username or password</p>
+              </div>
+              <button type="submit" class="btn btn-primary mb-3" >Login</button>
             </div>
           </div>
         </div>
-
-        <div class="row justify-content-center">
-          <div class="col-auto mt-3">
-            <a href="registration">REGISTRAZIONE</a>
-          </div>
-        </div>
       </form>
-      <a routerLink=""> <button type="button" class="btn btn-primary mt-3">Indietro</button></a>
     </div>
   </div>
 </div>
