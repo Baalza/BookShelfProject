@@ -34,16 +34,28 @@ export class LoginComponent implements  OnInit{
     const password = this.userForm.get('password')?.value;
     console.log(username+" "+password);
     const body = new FormData();
+    const options = { headers:{}, withCredentials : true };
+
     body.append("username",username);
     body.append("password",password)
-    this.http.post('http://localhost:8080/demo/perform_login', body,{
-      headers: {}
-    })
+    this.http.post('http://localhost:8080/demo/perform_login', body, options)
       .pipe(
       ).subscribe((response: any) => {
       console.log("risposta: "+JSON.stringify(response));
       if(response.error === false) {
-        window.location.replace("/home");
+        const cookieApp = response.cookie;
+        var cookie =cookieApp.name+"="+cookieApp.value
+        ", maxAge="+cookieApp.maxAge
+        ", path=/demo"
+        ", domain=localhost" ;
+        document.cookie = cookie;
+
+        //window.location.reload();
+        //window.location.replace("");
+        this.router.navigate(['']).then(() => {
+          // Dopo il reindirizzamento, esegui il reload della pagina
+          location.reload();
+        });
 
       }else if(response.error === "true"){
 

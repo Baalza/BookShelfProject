@@ -17,6 +17,7 @@ export class DataGridFsComponent {
     'trashButton': TrashButtonComponent
   };*/
   // Each Column Definition results in one Column.
+
   modalReference: NgbActiveModal | undefined;
   component = DeleteModalComponent;
   ngbModalOptions: NgbModalOptions = {
@@ -61,8 +62,9 @@ export class DataGridFsComponent {
 
   // Example load data from server
   onGridReady(params: GridReadyEvent) {
+    const options = { headers:{}, withCredentials : true };
     this.rowData$ = this.http
-      .get<any[]>('http://localhost:8080/demo/restFiles');
+      .get<any[]>('http://localhost:8080/demo/restFiles',options);
   }
 
 

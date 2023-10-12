@@ -118,21 +118,6 @@ public class FileController {
             String json = objectMapper.writeValueAsString(string);
             return json;
         }
-        //System.out.println(root.resolve(file.getOriginalFilename()));
-        //String path = root.resolve(file.getOriginalFilename()).toString();
-
-        //String path = root.resolve(nuovoNome).toString();
-        //System.out.println("nuovo nome "+path);
-
-        /*try {
-            String command = "rclone copy " + path + " BookShelfRemote:FileBookShelf";
-            String result = commandExecutor.getCommandOutput(command);
-            System.out.println("COMMAND " + result);
-            //fileService.deleteAll();
-
-        } catch (IOException | InterruptedException e) {
-            e.printStackTrace();
-        }*/
 
         String string = "file-manager";
 

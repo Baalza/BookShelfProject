@@ -4,7 +4,9 @@ import com.bookshelf2.demo.service.BookshelfUserDetailsContextMapper;
 import com.bookshelf2.demo.service.UserService;
 import com.bookshelf2.demo.util.TwoFactorAuthenticationFilter;
 import com.fasterxml.jackson.databind.ObjectMapper;
+
 import org.apache.catalina.filters.CorsFilter;
+import org.hibernate.resource.jdbc.spi.JdbcSessionContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -29,6 +31,7 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
+import javax.servlet.http.Cookie;
 import javax.sql.DataSource;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -64,11 +67,18 @@ public class DemoSecurityConfig  extends WebSecurityConfigurerAdapter {
         http
                 .cors().and()
                 .csrf(AbstractHttpConfigurer::disable)
+
+                .sessionManagement()
+                .sessionFixation()
+                .migrateSession()
+                .and()
+
                 .authorizeRequests()
                 .antMatchers("/anonymus*").anonymous() //role anonymus
                 .antMatchers("/login*").permitAll()
                 .antMatchers("/loadFile").permitAll()
-
+                 .antMatchers("/restFiles").authenticated()
+                //.antMatchers("http://localhost:4200/file-manager").authenticated()
                 /*.antMatchers("/google**").permitAll()
                 .antMatchers("/oauth2/authorization/google").permitAll()
                 .antMatchers("/login/oauth2/code/google").permitAll()*/
@@ -85,10 +95,15 @@ public class DemoSecurityConfig  extends WebSecurityConfigurerAdapter {
 
                 .and()
                 .formLogin()
-                .loginPage("/login")
-
+                .loginPage("http://localhost:4200/demo/login")
                 .loginProcessingUrl("/perform_login")
+
                 .successHandler((request, response, authentication) -> {
+                    Cookie customCookie = new Cookie("Authenticated", "true");
+                    customCookie.setMaxAge(86400); // Durata in secondi
+                    customCookie.setPath("/demo"); // Imposta il percorso del cookie
+                    customCookie.setHttpOnly(false);
+                    customCookie.setDomain("localhost");
                     // Dopo una corretta autenticazione, restituisci una risposta JSON
                     response.setContentType("application/json");
                     UserDetails userDetails = (UserDetails) authentication.getPrincipal();
@@ -98,6 +113,8 @@ public class DemoSecurityConfig  extends WebSecurityConfigurerAdapter {
                     responseData.put("error", false);
                     responseData.put("user", userDetails.getUsername());
                     responseData.put("role",role);
+                    responseData.put("cookie",customCookie);
+                    //responseData.put("session",);
                     response.getWriter().write(new ObjectMapper().writeValueAsString(responseData));
                 })
                 .failureHandler((request, response, exception) -> {
@@ -142,9 +159,10 @@ public class DemoSecurityConfig  extends WebSecurityConfigurerAdapter {
     @Bean
     CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(Arrays.asList("http://localhost:4200"));
+        configuration.setAllowedOrigins(Arrays.asList("http://localhost:4200", "http://localhost:4200/demo"));
         configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE"));
         configuration.setAllowedHeaders(Arrays.asList("Authorization", "Content-Type"));
+        configuration.setAllowCredentials(true);
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration);
         return source;
