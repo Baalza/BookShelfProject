@@ -6,7 +6,13 @@ a {
 .error{
   color: #ff0000;
 }
-
+.vertical-center {
+  margin: 0;
+  position: absolute;
+  top: 40%;
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
+}
 .navbar-nav{
   right:0;
   position: absolute;

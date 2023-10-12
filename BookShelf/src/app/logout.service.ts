@@ -19,10 +19,7 @@ export class LogoutService {
         const cookieApp = response.cookie;
         var cookie =cookieApp.name+"="+cookieApp.value+"; expires=Thu, 18 Dec 2013 12:00:00 UTC; Path=/demo"+"; domain=localhost" ;
         document.cookie = cookie;
-        //document.cookie = "username=John Doe; path=/demo, expires=Thu, 18 Dec 2024 12:00:00 UTC";
-
-
-
+        window.location.href = '/demo/';
       }
   });
 }
