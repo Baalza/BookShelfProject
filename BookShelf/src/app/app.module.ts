@@ -20,6 +20,7 @@ import { TrashButtonComponent } from './trash-button/trash-button.component';
 import { DeleteModalComponent } from './delete-modal/delete-modal.component';
 import { LoginComponent } from './login/login.component';
 import { GAuthComponent } from './g-auth/g-auth.component';
+import { QrCodeComponent } from './qr-code/qr-code.component';
 
 
 
@@ -37,6 +38,7 @@ import { GAuthComponent } from './g-auth/g-auth.component';
     DeleteModalComponent,
     LoginComponent,
     GAuthComponent,
+    QrCodeComponent,
   ],
     imports: [
         BrowserModule,

@@ -18,6 +18,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -99,8 +100,12 @@ public class DemoSecurityConfig  extends WebSecurityConfigurerAdapter {
                 .loginProcessingUrl("/perform_login")
 
                 .successHandler((request, response, authentication) -> {
+
+
+
                     Cookie customCookie = new Cookie("Authenticated", "true");
                     customCookie.setMaxAge(86400); // Durata in secondi
+
                     customCookie.setPath("/demo"); // Imposta il percorso del cookie
                     customCookie.setHttpOnly(false);
                     customCookie.setDomain("localhost");
@@ -108,11 +113,10 @@ public class DemoSecurityConfig  extends WebSecurityConfigurerAdapter {
                     response.setContentType("application/json");
                     UserDetails userDetails = (UserDetails) authentication.getPrincipal();
                     String role = authentication.getAuthorities().iterator().next().getAuthority();
-
+                    boolean enable = userService.findUser(userDetails.getUsername()).getUsing2FA();
                     Map<String, Object> responseData = new HashMap<>();
                     responseData.put("error", false);
-                    responseData.put("user", userDetails.getUsername());
-                    responseData.put("role",role);
+                    responseData.put("2fa",enable);
                     responseData.put("cookie",customCookie);
                     //responseData.put("session",);
                     response.getWriter().write(new ObjectMapper().writeValueAsString(responseData));
@@ -156,7 +160,7 @@ public class DemoSecurityConfig  extends WebSecurityConfigurerAdapter {
                 .permitAll()
 
                 .and()
-                .addFilterAfter(new TwoFactorAuthenticationFilter("/2fa-login",userService),  DefaultLoginPageGeneratingFilter.class)
+                .addFilterAfter(new TwoFactorAuthenticationFilter("/2fa-login",userService,corsConfigurationSource()),  DefaultLoginPageGeneratingFilter.class)
                 .authenticationProvider(twoFactorAuthenticationProvider); // Configura la 2FA
 
 
@@ -169,6 +173,7 @@ public class DemoSecurityConfig  extends WebSecurityConfigurerAdapter {
 
 
     }
+
 
     @Bean
     CorsConfigurationSource corsConfigurationSource() {

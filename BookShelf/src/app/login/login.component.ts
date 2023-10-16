@@ -43,22 +43,27 @@ export class LoginComponent implements  OnInit{
       ).subscribe((response: any) => {
       console.log("risposta: "+JSON.stringify(response));
       if(response.error === false) {
-        console.log(response);
-        const cookieApp = response.cookie;
-        var cookie =cookieApp.name+"="+cookieApp.value
-        ", maxAge="+cookieApp.maxAge
-        ", Path=/"
-        ", domain=localhost" ;
-        document.cookie = cookie;
+        console.log(response['2fa']);
+        if(response['2fa'] === false) {
+          const cookieApp = response.cookie;
+          var cookie =cookieApp.name+"="+cookieApp.value+"; Path=/demo"+"; domain=localhost" ;
+          document.cookie = cookie;
+          //il token authenticated lo creo solo se o non ha la 2fa oppure dopo che ha eseguito la 2fa
+          //window.location.reload();
+          //window.location.replace("");
+          this.router.navigate(['']).then(() => {
+            // Dopo il reindirizzamento, esegui il reload della pagina
+             location.reload();
 
-        //window.location.reload();
-        //window.location.replace("");
-        this.router.navigate(['']).then(() => {
-          // Dopo il reindirizzamento, esegui il reload della pagina
-          location.reload();
-        });
+          });
+        }else if(response['2fa'] === true){
+          this.router.navigate(['/demo/2fa-login']).then(() => {
+            // Dopo il reindirizzamento, esegui il reload della pagina
+            location.reload();
 
-      }else if(response.error === "true"){
+          });
+        }
+      }else if(response.error === true){
 
         this.router.navigateByUrl('/', {skipLocationChange: true}).then(() =>
           this.router.navigate(['/demo/login'], {queryParams: {invalid: true}}));

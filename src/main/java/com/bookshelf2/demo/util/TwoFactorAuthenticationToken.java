@@ -24,7 +24,6 @@ public class TwoFactorAuthenticationToken extends UsernamePasswordAuthentication
     }
 
     public String getOtpCode() {
-        System.out.println("service"+userService);
         return otpCode;
     }
 }

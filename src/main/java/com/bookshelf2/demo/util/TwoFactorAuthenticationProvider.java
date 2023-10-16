@@ -1,23 +1,15 @@
 package com.bookshelf2.demo.util;
 
 import com.bookshelf2.demo.model.User;
-import com.bookshelf2.demo.service.UserDetailsPrincipal;
 import com.bookshelf2.demo.service.UserService;
-import com.bookshelf2.demo.service.UserServiceImpl;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.jboss.aerogear.security.otp.Totp;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Lazy;
-import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -29,8 +21,10 @@ public class TwoFactorAuthenticationProvider implements AuthenticationProvider {
 
 private UserService userService;
 
+
     public TwoFactorAuthenticationProvider(UserService userService) {
         this.userService=userService;
+
     }
 
 
@@ -60,13 +54,16 @@ private UserService userService;
         String SK = user.getSecret().toString().toUpperCase().trim();
         boolean isOtpValid = validateOtpCode(otpCode);
         Totp totp = new Totp(SK);
+        System.out.println("SK: " + SK + " " + totp.verify(otpCode));
         if (isOtpValid && totp.verify(otpCode)) {
             System.out.println("Codice valido");
             // Restituisci un'istanza di Authentication riuscita
             return authentication;
         } else {
             System.out.println("Codice non valido");
-            throw new BadCredentialsException("Invalid OTP code");
+            authentication.setAuthenticated(false);
+            return authentication;
+
         }
     }
 
