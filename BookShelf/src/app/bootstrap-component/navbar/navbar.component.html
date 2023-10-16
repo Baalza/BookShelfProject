@@ -30,7 +30,7 @@
             <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink1">
               <li *ngIf="!isAuth"><a class="dropdown-item"  routerLink="/demo/login">Login</a></li>
               <li *ngIf="isAuth"><a class="dropdown-item"  (click)="performLogout()">Logout</a></li>
-              <li *ngIf="isAuth"><a class="dropdown-item" href="qrcode"><button type="button" class="btn btn-primary">Enable 2FA</button></a></li>
+              <li *ngIf="isAuth"><a class="dropdown-item" routerLink="/demo/qr-code"><button type="button" class="btn btn-primary">Enable 2FA</button></a></li>
             </ul>
           </li>
         </ul>

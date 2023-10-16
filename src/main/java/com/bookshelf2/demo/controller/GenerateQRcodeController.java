@@ -2,6 +2,8 @@ package com.bookshelf2.demo.controller;
 
 import com.bookshelf2.demo.model.User;
 import com.bookshelf2.demo.service.UserService;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationContext;
@@ -11,14 +13,16 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.Collection;
 import java.util.Map;
 
-@Controller
+@RestController
 public class GenerateQRcodeController {
 
     @Autowired
@@ -43,7 +47,8 @@ public class GenerateQRcodeController {
     }
 
     @GetMapping("qrcode")
-    public String getQrcode(Map<String, Object> model) throws UnsupportedEncodingException {
+    @CrossOrigin(origins = "http://localhost:4200")
+    public String getQrcode(Map<String, Object> model) throws UnsupportedEncodingException, JsonProcessingException {
         SecurityContext context = SecurityContextHolder.getContext();
         Authentication authentication = context.getAuthentication();
         Collection<? extends GrantedAuthority> authorities=authentication.getAuthorities();
@@ -57,7 +62,13 @@ public class GenerateQRcodeController {
 
         userService.save(user);
         String QRurl = generateQRUrl(user);
-        model.put("qr",QRurl);
-        return "qrcode";
+
+        ObjectMapper objectMapper = new ObjectMapper();
+
+        String json = objectMapper.writeValueAsString(QRurl);
+
+        System.out.println(json);
+
+        return json;
     }
 }

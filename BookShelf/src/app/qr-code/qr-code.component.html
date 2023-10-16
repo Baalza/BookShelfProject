@@ -1,1 +1,20 @@
-<p>qr-code works!</p>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+</head>
+<body>
+<div class="container vertical-center">
+  <div class="row justify-content-center text-center align-items-center full-vh">
+    <div class="col-auto">
+      <img  [attr.src]="url" alt=""/>
+    </div>
+    <div class="row justify-content-center text-center align-items-center">
+      <div class="col-auto">
+        <a (click)="logout()"> <button type="button" class="btn btn-primary mt-3" >LOGIN</button></a>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>
