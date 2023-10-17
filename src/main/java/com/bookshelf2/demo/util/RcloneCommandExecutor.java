@@ -10,6 +10,13 @@ public class RcloneCommandExecutor {
 
     public static String getCommandOutput(String command) throws IOException, InterruptedException {
         ProcessBuilder processBuilder = new ProcessBuilder(command.split("\\s+"));
+
+        String strArr[];
+        strArr=command.split("\\s+");
+        for(int i =0; i<strArr.length;i++){
+            System.out.println(strArr[i]);
+        }
+
         processBuilder.redirectErrorStream(true);
         Process process = processBuilder.start();
 

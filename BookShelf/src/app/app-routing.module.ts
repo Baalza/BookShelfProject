@@ -7,10 +7,12 @@ import { authGuard } from './auth.guard';
 import {preventLoginGuard} from "./prevent-login.guard";
 import {GAuthComponent} from "./g-auth/g-auth.component";
 import {QrCodeComponent} from "./qr-code/qr-code.component";
+import {CreateRemoteComponent} from "./create-remote/create-remote.component";
 
 const routes: Routes = [
   {path: 'demo', component: HomeComponent, title: 'HOME - BookShelf'},
   {path: 'demo/qr-code', component: QrCodeComponent, title: 'QRCODE - BookShelf'},
+  {path: 'demo/create-remote', component: CreateRemoteComponent, title: 'CreateRemote - BookShelf', canActivate: [authGuard]},
   {path: 'demo/file-manager', component: FileManagerComponent, title: 'FileManager - BookShelf',canActivate: [authGuard]},
   {path: 'demo/login', component: LoginComponent, title: 'Login - BookShelf',canActivate: [preventLoginGuard]},
   {path: 'demo/2fa-login', component: GAuthComponent, title: '2FA-LOGIN - BookShelf'},

@@ -21,6 +21,7 @@ import { DeleteModalComponent } from './delete-modal/delete-modal.component';
 import { LoginComponent } from './login/login.component';
 import { GAuthComponent } from './g-auth/g-auth.component';
 import { QrCodeComponent } from './qr-code/qr-code.component';
+import { CreateRemoteComponent } from './create-remote/create-remote.component';
 
 
 
@@ -39,6 +40,7 @@ import { QrCodeComponent } from './qr-code/qr-code.component';
     LoginComponent,
     GAuthComponent,
     QrCodeComponent,
+    CreateRemoteComponent,
   ],
     imports: [
         BrowserModule,
