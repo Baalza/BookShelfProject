@@ -1,0 +1,43 @@
+<footer>
+  <nav class="navbar navbar-expand-lg navbar-light bg-light sticky-bottom">
+    <div class="container-fluid">
+
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNavDropdown">
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a class="nav-link toasts active" aria-current="page" (click)="open(staticBackdrop)"> <fa-icon [icon]="faBars"></fa-icon></a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+</footer>
+<ng-template #staticBackdrop let-content>
+
+  <div class="offcanvas-header">
+    <h1 class="offcanvas-title" id="offcanvasBottomLabel"></h1>
+    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close" (click)="close()"></button>
+  </div>
+  <div class="offcanvas-body small">
+    <div class="container-fluid">
+      <div class="row users">
+        <h2>Utenti  <fa-icon class="user-canvas" [icon]="faUser"></fa-icon></h2>
+        <div class="col-auto mb-2 text-center">
+          <a class="nav-link canvas " aria-current="page" routerLink="/demo/registrazione">Registrazione</a>
+        </div>
+      </div>
+      <div class="row users pt-2">
+        <h2>Gestione  <fa-icon class="user-canvas" [icon]="faGear"></fa-icon></h2>
+        <div class="col-auto mb-2">
+          <a routerLink="/demo/create-remote">
+            <button type="button" class="btn btn-primary">Crea Remote</button>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</ng-template>

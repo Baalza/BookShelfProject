@@ -1,0 +1,51 @@
+a {
+  text-decoration: none !important;
+  flex-basis: fit-content;
+}
+
+.error{
+  color: #ff0000;
+}
+
+.navbar-nav{
+  right:0;
+  position: absolute;
+}
+
+.nav-link{
+  color: dodgerblue;
+}
+.nav-link:hover{
+  color: #0d6efd;
+}
+
+.navbar{
+  height: 50px !important;
+}
+
+.nav-link.toasts{
+  font-size: 30px !important;
+}
+footer{
+  position:fixed;
+  bottom:0px;
+  background-color:pink;
+  width:100%;
+}
+
+.auto{
+  height: auto !important;
+}
+
+.row.users{
+  border-bottom: 5px solid #4b4949 !important;
+}
+/*.offcanvas-header{
+  border-bottom: 5px solid #4b4949 !important;
+}*/
+.nav-link.canvas{
+  font-size: 20px;
+}
+.user-canvas{
+  font-size: medium !important;
+}

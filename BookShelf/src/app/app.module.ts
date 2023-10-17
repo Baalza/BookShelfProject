@@ -25,6 +25,8 @@ import { CreateRemoteComponent } from './create-remote/create-remote.component';
 import { RegistrazioneComponent } from './registrazione/registrazione.component';
 import { ConfirmModalComponent } from './confirm-modal/confirm-modal.component';
 import { AccountConfirmationComponent } from './account-confirmation/account-confirmation.component';
+import {FooterNavComponent} from "./bootstrap-component/footer-nav/footer-nav.component";
+
 
 
 
@@ -47,6 +49,7 @@ import { AccountConfirmationComponent } from './account-confirmation/account-con
     RegistrazioneComponent,
     ConfirmModalComponent,
     AccountConfirmationComponent,
+    FooterNavComponent,
   ],
     imports: [
         BrowserModule,
