@@ -8,10 +8,14 @@ import {preventLoginGuard} from "./prevent-login.guard";
 import {GAuthComponent} from "./g-auth/g-auth.component";
 import {QrCodeComponent} from "./qr-code/qr-code.component";
 import {CreateRemoteComponent} from "./create-remote/create-remote.component";
+import {RegistrazioneComponent} from "./registrazione/registrazione.component";
+import {AccountConfirmationComponent} from "./account-confirmation/account-confirmation.component";
 
 const routes: Routes = [
   {path: 'demo', component: HomeComponent, title: 'HOME - BookShelf'},
+  {path: 'demo/account-confirmation', component: AccountConfirmationComponent, title: 'AccountConfirmation - BookShelf'},
   {path: 'demo/qr-code', component: QrCodeComponent, title: 'QRCODE - BookShelf'},
+  {path: 'demo/registrazione', component: RegistrazioneComponent, title: 'Registrazione - BookShelf'},
   {path: 'demo/create-remote', component: CreateRemoteComponent, title: 'CreateRemote - BookShelf', canActivate: [authGuard]},
   {path: 'demo/file-manager', component: FileManagerComponent, title: 'FileManager - BookShelf',canActivate: [authGuard]},
   {path: 'demo/login', component: LoginComponent, title: 'Login - BookShelf',canActivate: [preventLoginGuard]},

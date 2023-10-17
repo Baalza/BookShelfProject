@@ -128,6 +128,9 @@ public class DemoSecurityConfig extends WebSecurityConfigurerAdapter {
                 //.defaultSuccessUrl("/home", true)
 
                 .and()
+                .oauth2Login()
+
+                .and()
                 .rememberMe()
                 .key("superSecretKey")
                 .tokenValiditySeconds(18000) //5 ore
@@ -158,6 +161,7 @@ public class DemoSecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .addFilterAfter(new TwoFactorAuthenticationFilter("/2fa-login", userService, corsConfigurationSource()), DefaultLoginPageGeneratingFilter.class)
                 .authenticationProvider(twoFactorAuthenticationProvider); // Configura la 2FA
+
 
 
 
@@ -201,6 +205,7 @@ public class DemoSecurityConfig extends WebSecurityConfigurerAdapter {
 
         auth.jdbcAuthentication().dataSource(dataSource).passwordEncoder(passwordEncoder())
                 .and().authenticationProvider(twoFactorAuthenticationProvider);
+
 
 
 

@@ -22,6 +22,9 @@ import { LoginComponent } from './login/login.component';
 import { GAuthComponent } from './g-auth/g-auth.component';
 import { QrCodeComponent } from './qr-code/qr-code.component';
 import { CreateRemoteComponent } from './create-remote/create-remote.component';
+import { RegistrazioneComponent } from './registrazione/registrazione.component';
+import { ConfirmModalComponent } from './confirm-modal/confirm-modal.component';
+import { AccountConfirmationComponent } from './account-confirmation/account-confirmation.component';
 
 
 
@@ -41,6 +44,9 @@ import { CreateRemoteComponent } from './create-remote/create-remote.component';
     GAuthComponent,
     QrCodeComponent,
     CreateRemoteComponent,
+    RegistrazioneComponent,
+    ConfirmModalComponent,
+    AccountConfirmationComponent,
   ],
     imports: [
         BrowserModule,

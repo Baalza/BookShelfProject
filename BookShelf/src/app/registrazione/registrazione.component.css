@@ -1,0 +1,73 @@
+a {
+  text-decoration: none !important;
+  flex-basis: fit-content;
+}
+
+.error{
+  color: #ff0000;
+}
+
+.navbar-nav{
+  right:0;
+  position: absolute;
+}
+
+.nav-link{
+  color: dodgerblue;
+}
+.nav-link:hover{
+  color: #0d6efd;
+}
+
+.dropdown-menu[data-bs-popper] {
+
+  right: 1px !important;
+  left:auto !important;
+}
+
+.vertical-center {
+  margin: 0;
+  position: absolute;
+  top: 40%;
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
+}
+
+.uti{
+  font-size: small;
+}
+
+@import "//netdna.bootstrapcdn.com/font-awesome/3.0/css/font-awesome.css";
+
+.mainLoginInput::-webkit-input-placeholder {
+  font-family: FontAwesome;
+  font-weight: normal;
+  overflow: visible;
+  vertical-align: top;
+  display: inline-block !important;
+  padding-left: 5px;
+  padding-top: 2px;
+  color: #626265;
+}
+
+.mainLoginInput::-moz-placeholder  {
+  font-family: FontAwesome;
+  font-weight: normal;
+  overflow: visible;
+  vertical-align: top;
+  display: inline-block !important;
+  padding-left: 5px;
+  padding-top: 2px;
+  color: hsl(9, 40%, 60%);
+}
+
+.mainLoginInput:-ms-input-placeholder  {
+  font-family: FontAwesome;
+  font-weight: normal;
+  overflow: visible;
+  vertical-align: top;
+  display: inline-block !important;
+  padding-left: 5px;
+  padding-top: 2px;
+  color: hsl(9, 40%, 60%);
+}

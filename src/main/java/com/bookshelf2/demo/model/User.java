@@ -52,7 +52,6 @@ public class User {
     @Transient
     private String matchingPassword;
 
-    @NotEmpty(message = "nickname cannot be empty.")
     @Column(unique = true, name = "nickname")
     private String nickname;
 

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="it">
+<head>
+  <meta charset="UTF-8">
+</head>
+<body>
+
+
+<div class="container-fluid vertical-center">
+  <div class="container">
+    <div class="row justify-content-center text-center pt-2">
+      <div class="col-auto">
+        <a routerLink="">
+          <img
+            class="d-inline-block align-text-top pt-1 img-fluid"
+            src="assets/image/emt-logo-small2.png"
+            alt=""
+            width="140"
+            height="140"
+          />
+        </a>
+      </div>
+    </div>
+    <div class="row justify-content-center text-center">
+      <form [formGroup]="regForm" (submit)="onSubmit()" class="row g-3 justify-content-center">
+        <div class="row justify-content-center">
+          <div class="col-3">
+            <input type="text" class="form-control mainLoginInput" id="username" name="username" formControlName="username" placeholder="&#61447;  Email" >
+          </div>
+          <div class="row justify-content-center text-center pt-3">
+            <div class="col-3">
+              <input type="password" class="form-control mainLoginInput" id="password" name="password" formControlName="password" placeholder="&#61475;  Password" >
+            </div>
+          </div>
+          <div class="row justify-content-center text-center pt-3">
+            <div class="col-3">
+              <input type="password" class="form-control mainLoginInput" id="rePassword" name="rePassword" formControlName="rePassword" placeholder="&#61475;  Repeat Password" >
+            </div>
+          </div>
+          <div class="row justify-content-center text-center pt-1">
+            <div class="col-auto">
+              <div *ngIf="blank">
+                <p class="error" >I campi non possono essere vuoti</p>
+              </div>
+              <div *ngIf="duplicate">
+                <p class="error" >Questa email esiste già</p>
+              </div>
+              <div *ngIf="passMs">
+                <p class="error" >Le password devono essere uguali</p>
+              </div>
+              <div *ngIf="invalidEm">
+                <p class="error" >Formato email non valido</p>
+              </div>
+              <div *ngIf="invalidPw">
+                <p class="error" >La password deve essere lunga almeno 8 caratteri e contenere una lettera maiuscola</p>
+              </div>
+              <button type="submit" class="btn btn-primary mt-2" >Registrati</button>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<script
+  src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
+  integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
+  crossorigin="anonymous"
+></script>
+</body>
+</html>

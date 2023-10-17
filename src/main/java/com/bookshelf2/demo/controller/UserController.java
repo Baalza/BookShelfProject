@@ -5,6 +5,8 @@ import com.bookshelf2.demo.model.VerificationToken;
 import com.bookshelf2.demo.repository.UserRepository;
 import com.bookshelf2.demo.repository.VerificationTokenRepository;
 import com.bookshelf2.demo.service.UserService;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
@@ -12,11 +14,12 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.context.request.WebRequest;
 
 import java.util.*;
 
-@Controller
+@RestController
 public class UserController {
 
     @Autowired
@@ -29,25 +32,27 @@ public class UserController {
     UserRepository userRepository;
 
     @GetMapping("accountConfirmation")
-    public String confirmAccount(@RequestParam("token") String token, Map<String,Object> model, Map<String,Object> type){
+    public String confirmAccount(@RequestParam("token") String token, Map<String,Object> model, Map<String,Object> type) throws JsonProcessingException {
 
 
         VerificationToken verificationToken = userService.getVerificationToken(token);
         if (verificationToken == null) {
-            System.out.println("impostare errore");
-            type.put("invalid","invalid");
-            model.put("invalidToken","Invalid token or account already confirmed.");
-            System.out.println("token invalido");
-            return "confirmAccount";
+
+            String string = "invalid-token";
+
+            ObjectMapper objectMapper = new ObjectMapper();
+
+            String json = objectMapper.writeValueAsString(string);
+
+            System.out.println(json);
+            return json;
         }
 
         User user = verificationToken.getUser();
         System.out.println(user.getId()+"dfvnibvns");
         Calendar cal = Calendar.getInstance();
         if ((verificationToken.getExpiryDate().getTime() - cal.getTime().getTime()) <= 0) {
-            type.put("invalid","expired");
-            model.put("invalidToken","Token expired, please register again.");
-            System.out.println("token scaduto");
+
             long userId = user.getId();
             List<Long> ids = new ArrayList<>();
             ids.add(verificationToken.getId());
@@ -59,7 +64,15 @@ public class UserController {
             List<Long> ids2 = new ArrayList<>();
             ids2.add(userId);
             userRepository.deleteAllByIdInBatch(ids2);
-            return "confirmAccount";
+
+            String string = "expiry-token";
+
+            ObjectMapper objectMapper = new ObjectMapper();
+
+            String json = objectMapper.writeValueAsString(string);
+
+            System.out.println(json);
+            return json;
         }
 
         user.setEnabled(true);
@@ -68,9 +81,14 @@ public class UserController {
         List<Long> ids = new ArrayList<>();
         ids.add(verificationToken.getId());
         verificationTokenRepository.deleteAllByIdInBatch(ids);
-        type.put("invalid","confirm");
-        model.put("invalidToken","Account confirm with success");
-        System.out.println("Account confirmed");
-        return "confirmAccount";
+
+        String string = "confirm";
+
+        ObjectMapper objectMapper = new ObjectMapper();
+
+        String json = objectMapper.writeValueAsString(string);
+
+        System.out.println(json);
+        return json;
     }
 }

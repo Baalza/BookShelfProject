@@ -55,13 +55,13 @@ public class UserListener implements ApplicationListener<OnCreateAccountEvent> {
         String recipientAddress = user.getUsername();
         String subject = "Registration Confirmation BookShelf";
         String confirmationUrl
-                = event.getAppUrl() + "/accountConfirmation?token=" + token;
+                = event.getAppUrl() + "/account-confirmation?token=" + token;
         String message = "Please confirm:";
         SimpleMailMessage email = new SimpleMailMessage();
 
         email.setTo(recipientAddress);
         email.setSubject(subject);
-        String htmlContent = message + "http://localhost:8080/" + confirmationUrl + "";
+        String htmlContent = message + "http://localhost:4200/" + confirmationUrl + "";
         email.setText(htmlContent);
         mailSender.send(email);
     }

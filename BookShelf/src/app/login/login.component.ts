@@ -13,9 +13,11 @@ export class LoginComponent implements  OnInit{
   username! : String;
   password! : String;
   isInvalid: Boolean = false;
+  url: String = "";
   constructor(private http: HttpClient,private router:Router, private route: ActivatedRoute) {
   }
   ngOnInit(): void {
+    this.url="https://accounts.google.com/o/oauth2/v2/auth?scope=https%3A//www.googleapis.com/auth/drive.metadata.readonly&include_granted_scopes=true&response_type=token&state=state_parameter_passthrough_value&redirect_uri=http://localhost:4200/demo/&client_id=703748636020-f78st96be6le75udko9ssp0d3tvhkq27.apps.googleusercontent.com"
     this.initForm();
     this.route.queryParams.subscribe(params => {
       if (params['invalid'] === 'true') {
