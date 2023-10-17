@@ -60,6 +60,10 @@ public class RegistrationController {
             //redirectAttributes.addFlashAttribute("addUser", user);
             return "registrazione";
         }
+        if(pass.length() < 8 && !pass.matches(".*[A-Z].*")) {
+            model.put("invalidEmail", "La password deve essere lunga almeno 8 caratteri e contenere una lettera maiuscola");
+            return "registrazione";
+        }
         else if(!pass.equals(mPass)) {
             model.put("invalidEmail","Password mismatch");
             return "registrazione";

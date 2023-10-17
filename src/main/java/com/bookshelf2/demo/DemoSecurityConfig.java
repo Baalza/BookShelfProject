@@ -41,7 +41,7 @@ import java.util.Map;
 @Configuration
 @EnableWebSecurity
 @ComponentScan("com.bookshelf2.demo")
-public class DemoSecurityConfig  extends WebSecurityConfigurerAdapter {
+public class DemoSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     private DataSource dataSource;
@@ -57,12 +57,9 @@ public class DemoSecurityConfig  extends WebSecurityConfigurerAdapter {
     UserService userService;
 
 
-
-
-
     @Override
-    @CrossOrigin(origins = "http://localhost:4200",methods = RequestMethod.POST)
-    protected void configure (final HttpSecurity http) throws Exception{
+    @CrossOrigin(origins = "http://localhost:4200", methods = RequestMethod.POST)
+    protected void configure(final HttpSecurity http) throws Exception {
 
 
         http
@@ -78,7 +75,7 @@ public class DemoSecurityConfig  extends WebSecurityConfigurerAdapter {
                 .antMatchers("/anonymus*").anonymous() //role anonymus
                 .antMatchers("/login*").permitAll()
                 .antMatchers("/loadFile").permitAll()
-                 .antMatchers("/restFiles").authenticated()
+                .antMatchers("/restFiles").authenticated()
                 //.antMatchers("http://localhost:4200/file-manager").authenticated()
                 /*.antMatchers("/google**").permitAll()
                 .antMatchers("/oauth2/authorization/google").permitAll()
@@ -93,15 +90,12 @@ public class DemoSecurityConfig  extends WebSecurityConfigurerAdapter {
                 .anyRequest().permitAll()
 
 
-
                 .and()
                 .formLogin()
                 .loginPage("http://localhost:4200/demo/login")
                 .loginProcessingUrl("/perform_login")
 
                 .successHandler((request, response, authentication) -> {
-
-
 
                     Cookie customCookie = new Cookie("Authenticated", "true");
                     customCookie.setMaxAge(86400); // Durata in secondi
@@ -114,10 +108,12 @@ public class DemoSecurityConfig  extends WebSecurityConfigurerAdapter {
                     UserDetails userDetails = (UserDetails) authentication.getPrincipal();
                     String role = authentication.getAuthorities().iterator().next().getAuthority();
                     boolean enable = userService.findUser(userDetails.getUsername()).getUsing2FA();
+                    String email = userDetails.getUsername();
                     Map<String, Object> responseData = new HashMap<>();
                     responseData.put("error", false);
-                    responseData.put("2fa",enable);
-                    responseData.put("cookie",customCookie);
+                    responseData.put("2fa", enable);
+                    responseData.put("email",email);
+                    responseData.put("cookie", customCookie);
                     //responseData.put("session",);
                     response.getWriter().write(new ObjectMapper().writeValueAsString(responseData));
                 })
@@ -149,7 +145,7 @@ public class DemoSecurityConfig  extends WebSecurityConfigurerAdapter {
                     response.setContentType("application/json");
                     Map<String, Object> responseData = new HashMap<>();
                     responseData.put("error", false);
-                    responseData.put("cookie",customCookie);
+                    responseData.put("cookie", customCookie);
                     response.getWriter().write(new ObjectMapper().writeValueAsString(responseData));
                 })
                 .logoutRequestMatcher(new AntPathRequestMatcher("/perform_logout", "GET"))
@@ -160,7 +156,7 @@ public class DemoSecurityConfig  extends WebSecurityConfigurerAdapter {
                 .permitAll()
 
                 .and()
-                .addFilterAfter(new TwoFactorAuthenticationFilter("/2fa-login",userService,corsConfigurationSource()),  DefaultLoginPageGeneratingFilter.class)
+                .addFilterAfter(new TwoFactorAuthenticationFilter("/2fa-login", userService, corsConfigurationSource()), DefaultLoginPageGeneratingFilter.class)
                 .authenticationProvider(twoFactorAuthenticationProvider); // Configura la 2FA
 
 
@@ -196,7 +192,7 @@ public class DemoSecurityConfig  extends WebSecurityConfigurerAdapter {
 
 
     @Override
-    @CrossOrigin(origins = "http://localhost:4200",methods = RequestMethod.POST)
+    @CrossOrigin(origins = "http://localhost:4200", methods = RequestMethod.POST)
     protected void configure(final AuthenticationManagerBuilder auth) throws Exception {
 
         /*auth.inMemoryAuthentication()
