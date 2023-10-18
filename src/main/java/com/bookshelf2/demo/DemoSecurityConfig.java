@@ -76,6 +76,8 @@ public class DemoSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/login*").permitAll()
                 .antMatchers("/loadFile").permitAll()
                 .antMatchers("/restFiles").authenticated()
+                .antMatchers("/createRemote").hasRole("ADMIN")
+
                 //.antMatchers("http://localhost:4200/file-manager").authenticated()
                 /*.antMatchers("/google**").permitAll()
                 .antMatchers("/oauth2/authorization/google").permitAll()
@@ -107,12 +109,14 @@ public class DemoSecurityConfig extends WebSecurityConfigurerAdapter {
                     response.setContentType("application/json");
                     UserDetails userDetails = (UserDetails) authentication.getPrincipal();
                     String role = authentication.getAuthorities().iterator().next().getAuthority();
+                    System.out.println("ruoli"+role);
                     boolean enable = userService.findUser(userDetails.getUsername()).getUsing2FA();
                     String email = userDetails.getUsername();
                     Map<String, Object> responseData = new HashMap<>();
                     responseData.put("error", false);
                     responseData.put("2fa", enable);
                     responseData.put("email",email);
+                    responseData.put("role",role);
                     responseData.put("cookie", customCookie);
                     //responseData.put("session",);
                     response.getWriter().write(new ObjectMapper().writeValueAsString(responseData));

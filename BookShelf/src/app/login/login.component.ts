@@ -53,10 +53,11 @@ export class LoginComponent implements  OnInit{
           //il token authenticated lo creo solo se o non ha la 2fa oppure dopo che ha eseguito la 2fa
           //window.location.reload();
           //window.location.replace("");
+          console.log(response);
 
           this.router.navigate(['']).then(() => {
             // Dopo il reindirizzamento, esegui il reload della pagina
-             location.reload();
+             //location.reload();
 
           });
         }else if(response['2fa'] === true){
