@@ -32,10 +32,16 @@
       <div class="row users pt-2">
         <h2>Gestione  <fa-icon class="user-canvas" [icon]="faGear"></fa-icon></h2>
         <div class="col-auto mb-2">
-          <a routerLink="/demo/create-remote">
+          <a routerLink="/demo/company" *ngIf="role === 'ROLE_ADMIN'">
+            <button type="button" class="btn btn-primary">Aziende</button>
+          </a>
+        </div>
+        <div class="col-auto mb-2">
+          <a routerLink="/demo/create-remote" *ngIf="role === 'ROLE_ADMIN'">
             <button type="button" class="btn btn-primary">Crea Remote</button>
           </a>
         </div>
+
       </div>
     </div>
   </div>

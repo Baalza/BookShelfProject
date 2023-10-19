@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <!--<noscript>
+    <meta http-equiv=refresh content='0; url=http://localhost:8080/demo/error?js=disabled'>
+  </noscript>-->
+  <link
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"
+    rel="stylesheet"
+    integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD"
+    crossorigin="anonymous"
+  />
+
+</head>
+<body>
+<bookshelf-navbar></bookshelf-navbar>
+
+<div class="container-fluid">
+
+  <div class="row text-center justify-content-center  pt-5">
+    <div class="col-10">
+      <h1 class="pt-2">Aziende</h1>
+      <!-- AG Grid Angular Component -->
+      <bookshelf-data-grid-company></bookshelf-data-grid-company>
+    </div>
+
+  </div>
+  <div class="row mt-3 justify-content-center text-center">
+
+
+    <button type="button" class="btn btn-primary mt-3" (click)="open(staticBackdrop)">
+      Aggiungi Azienda
+    </button>
+
+  </div>
+
+</div>
+<ng-template #staticBackdrop let-content>
+
+
+  <div class="offcanvas-body small">
+    <div class="container-fluid vertical-center">
+      <div class="row justify-content-center text-center">
+        <div class="col-auto">
+          <h1 class="offcanvas-title" id="offcanvasBottomLabel"></h1>
+          <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close" (click)="close()"></button>
+        </div>
+        <form [formGroup]="cpForm" (submit)="onSubmit()" class="row g-3 justify-content-center">
+          <div class="row justify-content-center">
+            <h2>Aggiungi Azienda</h2>
+            <div class="col-3">
+              <input type="text" class="form-control mainLoginInput" id="nome" name="nome" formControlName="name"  placeholder="&#61687;  Nome" >
+            </div>
+            <div class="row justify-content-center text-center pt-3">
+              <div class="col-3">
+                <input type="text" class="form-control mainLoginInput" id="piva" name="piva" formControlName="piva"  placeholder="&#61686;  Partita Iva" >
+              </div>
+            </div>
+            <div class="row justify-content-center text-center pt-3">
+              <div class="col-3">
+                <input type="text" class="form-control mainLoginInput" id="telefono" name="telefono" formControlName="telefono" placeholder="&#61589;  Telefono" >
+              </div>
+            </div>
+            <div class="row justify-content-center text-center pt-3">
+              <div class="col-3">
+                <input type="text" class="form-control mainLoginInput" id="email" name="email" formControlName="email" placeholder="&#61443;  Email" >
+              </div>
+            </div>
+            <div class="row justify-content-center text-center pt-3">
+              <div class="col-3">
+                <input type="text" class="form-control mainLoginInput" id="url" name="url" formControlName="url" placeholder="&#61633;  URL" >
+              </div>
+            </div>
+            <div class="row justify-content-center text-center pt-1">
+              <p *ngIf="blank" class="error mt-2">Il nome dell'azienda non può essere vuoto</p>
+              <p *ngIf="invalidPiva" class="error mt-2">Partita Iva invalida</p>
+              <p *ngIf="duplicatePiva" class="error mt-2">Partita Iva già presente</p>
+              <p *ngIf="invalidEmail" class="error mt-2">Formato email non valido</p>
+              <div class="col-auto">
+
+                <button type="submit" class="btn btn-primary mt-2" >Aggiungi</button>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+</ng-template>
+</body>
+</html>

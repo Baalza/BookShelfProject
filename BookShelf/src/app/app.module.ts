@@ -26,6 +26,8 @@ import { RegistrazioneComponent } from './registrazione/registrazione.component'
 import { ConfirmModalComponent } from './confirm-modal/confirm-modal.component';
 import { AccountConfirmationComponent } from './account-confirmation/account-confirmation.component';
 import {FooterNavComponent} from "./bootstrap-component/footer-nav/footer-nav.component";
+import { CreateCompanyComponent } from './create-company/create-company.component';
+import { DataGridCompanyComponent } from './data-grid-company/data-grid-company.component';
 
 
 
@@ -50,6 +52,8 @@ import {FooterNavComponent} from "./bootstrap-component/footer-nav/footer-nav.co
     ConfirmModalComponent,
     AccountConfirmationComponent,
     FooterNavComponent,
+    CreateCompanyComponent,
+    DataGridCompanyComponent,
   ],
     imports: [
         BrowserModule,

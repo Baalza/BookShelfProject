@@ -77,6 +77,7 @@ public class DemoSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/loadFile").permitAll()
                 .antMatchers("/restFiles").authenticated()
                 .antMatchers("/createRemote").hasRole("ADMIN")
+                .antMatchers("/createCompany").hasRole("ADMIN")
 
                 //.antMatchers("http://localhost:4200/file-manager").authenticated()
                 /*.antMatchers("/google**").permitAll()
@@ -144,6 +145,7 @@ public class DemoSecurityConfig extends WebSecurityConfigurerAdapter {
                 .logout()
                 .logoutSuccessUrl("/")
                 .logoutSuccessHandler((request, response, authentication) -> {
+                    System.out.println("logout");
                     Cookie customCookie = new Cookie("Authenticated", "true");
                     customCookie.setMaxAge(86400); // Durata in secondi
                     customCookie.setPath("/demo"); // Imposta il percorso del cookie
