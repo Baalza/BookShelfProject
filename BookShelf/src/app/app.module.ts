@@ -28,6 +28,9 @@ import { AccountConfirmationComponent } from './account-confirmation/account-con
 import {FooterNavComponent} from "./bootstrap-component/footer-nav/footer-nav.component";
 import { CreateCompanyComponent } from './create-company/create-company.component';
 import { DataGridCompanyComponent } from './data-grid-company/data-grid-company.component';
+import { UpdateUsersComponent } from './update-users/update-users.component';
+import { DataGridUserComponent } from './data-grid-user/data-grid-user.component';
+import { CanvasComponentComponent } from './bootstrap-component/canvas-component/canvas-component.component';
 
 
 
@@ -54,6 +57,9 @@ import { DataGridCompanyComponent } from './data-grid-company/data-grid-company.
     FooterNavComponent,
     CreateCompanyComponent,
     DataGridCompanyComponent,
+    UpdateUsersComponent,
+    DataGridUserComponent,
+    CanvasComponentComponent,
   ],
     imports: [
         BrowserModule,
@@ -67,7 +73,7 @@ import { DataGridCompanyComponent } from './data-grid-company/data-grid-company.
         ReactiveFormsModule,
         MatProgressSpinnerModule
     ],
-  providers: [],
+  providers: [CanvasComponentComponent],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

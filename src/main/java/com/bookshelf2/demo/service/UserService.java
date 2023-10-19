@@ -7,11 +7,14 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
+import java.util.List;
 
 
 public interface UserService {
     @Transactional
     User save(User user);
+
+    List<String> findAllNotAdmin();
 
     String findByUsername(String username);
 

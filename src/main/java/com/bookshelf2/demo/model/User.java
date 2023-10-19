@@ -16,7 +16,7 @@ import java.util.List;
 @NamedQueries({
         @NamedQuery(name = User.USER_REPORT, query = User.USER_REPORT_JPQL),
         @NamedQuery(name = User.USER_DELETEAUT, query = User.USER_DELETEAUT_JPQL),
-        //@NamedQuery(name = User.USER_USERNAME, query = User.USER_USERNAME_JPQL),
+        @NamedQuery(name = User.USER_REST, query = User.USER_REST_JPQL),
         //@NamedQuery(name = User.USER_DELETETOKEN, query = User.USER_DELETETOKEN_JPQL)
 })
 public class User {
@@ -27,8 +27,8 @@ public class User {
     public static final String USER_DELETEAUT= "User.deleteAut";
     public static final String USER_DELETEAUT_JPQL = "delete from Authorities as a where a.id = ?1";
 
-    public static final String USER_USERNAME = "User.findByUsername";
-    public static final String USER_USERNAME_JPQL = "select u.username,u.nickname,u.password from User u where u.username = ?1";
+    public static final String USER_REST = "User.findAllNotAdmin";
+    public static final String USER_REST_JPQL = "select u.username from User u where u.id not in (select r.user.id from Authorities as r where r.authority = 'ROLE_ADMIN')";
 
     //public static final String USER_DELETETOKEN = "User.findByUsername";
     //public static final String USER_DELETETOKEN_JPQL = "select v.username from VerificationToken v where v. = ?1";
@@ -48,6 +48,8 @@ public class User {
     private Boolean isUsing2FA = false;
 
     private String secret;
+
+    private String company;
 
     @Transient
     private String matchingPassword;
@@ -179,5 +181,13 @@ public class User {
 
     public void setSecret(String secret) {
         this.secret = secret;
+    }
+
+    public String getCompany() {
+        return company;
+    }
+
+    public void setCompany(String company) {
+        this.company = company;
     }
 }

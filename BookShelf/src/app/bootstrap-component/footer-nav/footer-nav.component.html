@@ -41,6 +41,11 @@
             <button type="button" class="btn btn-primary">Crea Remote</button>
           </a>
         </div>
+        <div class="col-auto mb-2">
+          <a routerLink="/demo/account-update" *ngIf="role === 'ROLE_ADMIN'">
+            <button type="button" class="btn btn-primary">Update utenti</button>
+          </a>
+        </div>
 
       </div>
     </div>

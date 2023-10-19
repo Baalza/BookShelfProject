@@ -1,0 +1,89 @@
+a {
+  text-decoration: none !important;
+  flex-basis: fit-content;
+}
+
+.error{
+  color: #ff0000;
+}
+
+.navbar-nav{
+  right:0;
+  position: absolute;
+}
+
+.nav-link{
+  color: dodgerblue;
+}
+.nav-link:hover{
+  color: #0d6efd;
+}
+
+.dropdown-menu[data-bs-popper] {
+
+  right: 1px !important;
+  left:auto !important;
+}
+:host ::ng-deep .ag-header-cell-label, .ag-header-group-cell-label{
+  justify-content: center;
+}
+:host ::ng-deep .ag-center-cols-container{
+  width: auto !important;
+}
+
+.overlay{
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.4); /* Colore di sfondo con opacità */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999; /* Imposta il valore Z per assicurarsi che sia sopra tutto il resto */
+}
+.vertical-center {
+  margin: 0;
+  position: absolute;
+  top: 40%;
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
+}
+.full{
+  height: 90% !important;
+}
+@import "//netdna.bootstrapcdn.com/font-awesome/3.0/css/font-awesome.css";
+
+.mainLoginInput::-webkit-input-placeholder {
+  font-family: FontAwesome;
+  font-weight: normal;
+  overflow: visible;
+  vertical-align: top;
+  display: inline-block !important;
+  padding-left: 5px;
+  padding-top: 2px;
+  color: #626265;
+}
+
+.mainLoginInput::-moz-placeholder  {
+  font-family: FontAwesome;
+  font-weight: normal;
+  overflow: visible;
+  vertical-align: top;
+  display: inline-block !important;
+  padding-left: 5px;
+  padding-top: 2px;
+  color: hsl(9, 40%, 60%);
+}
+
+.mainLoginInput:-ms-input-placeholder  {
+  font-family: FontAwesome;
+  font-weight: normal;
+  overflow: visible;
+  vertical-align: top;
+  display: inline-block !important;
+  padding-left: 5px;
+  padding-top: 2px;
+  color: hsl(9, 40%, 60%);
+}

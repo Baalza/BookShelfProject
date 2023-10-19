@@ -1,0 +1,32 @@
+<div #canvasElement class="offcanvas-body small">
+  <div class="container-fluid vertical-center">
+    <div class="row justify-content-center text-center">
+      <div class="col-auto">
+        <h1 class="offcanvas-title" id="offcanvasBottomLabel"></h1>
+        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close" (click)="close()"></button>
+      </div>
+      <form class="row g-3 justify-content-center">
+        <div class="row justify-content-center">
+          <h2>Aggiungi Azienda</h2>
+          <div class="col-3">
+            <input type="text" class="form-control mainLoginInput" id="nome" name="nome" disabled placeholder="{{this.username}}" >
+          </div>
+          <div class="row justify-content-center text-center pt-3">
+            <div class="col-3">
+              <input type="text" class="form-control mainLoginInput" id="company" name="company"   [placeholder]="company">
+            </div>
+          </div>
+
+          <div class="row justify-content-center text-center pt-1">
+
+
+            <div class="col-auto">
+
+              <button type="submit" class="btn btn-primary mt-2" >Update</button>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

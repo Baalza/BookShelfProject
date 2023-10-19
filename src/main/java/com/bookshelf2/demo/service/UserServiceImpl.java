@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.sql.DataSource;
 import java.util.Date;
+import java.util.List;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -31,6 +32,11 @@ public class UserServiceImpl implements UserService {
     @Transactional
     public User save(User user){
         return userRepository.save(user);
+    }
+
+    @Override
+    public List<String> findAllNotAdmin() {
+        return userRepository.findAllNotAdmin();
     }
 
     @Override
