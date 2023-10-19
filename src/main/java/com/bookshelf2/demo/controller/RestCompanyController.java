@@ -24,4 +24,13 @@ public class RestCompanyController {
         return list;
 
     }
+
+    @GetMapping("restCompany/byRemote")
+    public List<Company> restCompanyByRemote(){
+        List<Company> list = new ArrayList<>();
+        list = companyService.findAllByRemoteExist(true);
+        //Collections.reverse(list);
+        return list;
+
+    }
 }

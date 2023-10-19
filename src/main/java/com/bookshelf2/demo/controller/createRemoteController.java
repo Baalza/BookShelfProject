@@ -1,5 +1,7 @@
 package com.bookshelf2.demo.controller;
 
+import com.bookshelf2.demo.model.Company;
+import com.bookshelf2.demo.service.CompanyService;
 import com.bookshelf2.demo.util.RcloneCommandExecutor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -15,8 +17,15 @@ public class createRemoteController {
     @Autowired
     private RcloneCommandExecutor commandExecutor;
 
+    @Autowired
+    private CompanyService companyService;
+
     @PostMapping("createRemote")
-    public String createRemote(@RequestParam("name") String name){
+    public String createRemote(@RequestParam("name") String idStr){
+        Company company = new Company();
+        Long id = Long.valueOf(idStr);
+        company = companyService.findById(id);
+        String name = company.getName();
         System.out.println(name);
         String codice="";
         try {
@@ -57,6 +66,8 @@ public class createRemoteController {
         } catch (IOException | InterruptedException e) {
             e.printStackTrace();
         }
+        company.setRemoteExist(true);
+        companyService.save(company);
         return "pippo";
     }
 }

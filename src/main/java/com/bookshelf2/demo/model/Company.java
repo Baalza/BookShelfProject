@@ -41,6 +41,8 @@ public class Company {
     @Column(name = "url")
     private String url;
 
+    private Boolean remoteExist = false;
+
     public Company() {
 
     }
@@ -91,5 +93,13 @@ public class Company {
 
     public void setUrl(String url) {
         this.url = url;
+    }
+
+    public Boolean getRemoteExist() {
+        return remoteExist;
+    }
+
+    public void setRemoteExist(Boolean remoteExist) {
+        this.remoteExist = remoteExist;
     }
 }

@@ -12,4 +12,8 @@ public interface CompanyService {
 
     @Transactional
     Company save(Company company);
+
+    Company findById(Long id);
+
+    List<Company> findAllByRemoteExist(Boolean remote);
 }

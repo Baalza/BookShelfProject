@@ -9,4 +9,8 @@ import java.util.List;
 public interface CompanyRepository extends JpaRepository<Company,Long> {
 
     public List<Company> findAll();
+
+    public Company findAllById(Long id);
+
+    public List<Company> findAllByRemoteExist(Boolean remote);
 }

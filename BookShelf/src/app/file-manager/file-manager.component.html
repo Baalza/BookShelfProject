@@ -21,7 +21,11 @@
       <h1 class="pt-5">Lists of Files</h1>
     </div>
     <div class="row justify-content-center text-center pt-2">
-      <div class="col-2">
+      <select class="form-select" aria-label="Default select example" >
+        <option value="" disabled selected>Seleziona un'Azienda</option>
+        <option *ngFor="let object of resp" [value]="object.id">{{ object.name }}</option>
+      </select>
+      <div class="col-2 pt-3">
         <button #bisyncB id="sync" class="btn" type="button" (click)="bisync()"> <fa-icon [icon]="faArrowsRotate"></fa-icon></button>
       </div>
 

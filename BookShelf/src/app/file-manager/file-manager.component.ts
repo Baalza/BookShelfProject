@@ -24,6 +24,7 @@ export class FileManagerComponent implements OnInit {
   isOw: Boolean = false;
   component = ModalOwComponent;
   isLoading: Boolean = false;
+  resp:any;
 
   @ViewChild('bisyncB', {static: true}) button!: ElementRef;
 
@@ -33,7 +34,15 @@ export class FileManagerComponent implements OnInit {
 
   ngOnInit() {
     this.initForm();
-
+    const options = { headers:{}, withCredentials : true };
+    // Invia la chiamata POST
+    this.http.get('http://localhost:8080/demo/restCompany/byRemote', options
+    )
+      .pipe(
+      ).subscribe((response: any) => {
+      console.log(response);
+      this.resp = response;
+    });
     this.route.queryParams.subscribe(params => {
       if (params['add'] === 'true' || params['ow'] === 'true' || params['delete'] === 'true') {
         // Se il parametro "add" è "true", aggiungi la classe al bottone
